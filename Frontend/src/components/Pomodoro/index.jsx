@@ -165,7 +165,7 @@ const Pomodoro = () => {
 
       // Update user's todaysPomodoroTime in the database
       const studyTimeInSeconds = todayData[currentDate];
-      axios.put('http://127.0.0.1:8080/api/updatepomotime', {
+      axios.put('https://orbital-orcin.vercel.app/api/updatepomotime', {
         date: currentDate,
         seconds: studyTimeInSeconds,
         category: selectedCategory, // Include selected category here
@@ -223,7 +223,7 @@ const Pomodoro = () => {
 
       // Update user's todaysPomodoroTime in the database
       const studyTimeInSeconds = todayData[currentDate];
-      axios.put('http://127.0.0.1:8080/api/updatepomotime', {
+      axios.put('https://orbital-orcin.vercel.app/api/updatepomotime', {
         date: currentDate,
         seconds: studyTimeInSeconds,
         category: selectedCategory, // Include selected category here
