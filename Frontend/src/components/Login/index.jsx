@@ -28,7 +28,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const url = "http://127.0.0.1:8080/api/auth";
+            const url = "https://orbital-orcin.vercel.app/api/auth";
             const { data: res } = await axios.post(url, data);
             localStorage.setItem("token", res.data.token);
             localStorage.setItem('username', res.data.username); // Store email as username
