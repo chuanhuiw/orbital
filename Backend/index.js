@@ -19,7 +19,7 @@ connection();
 
 app.use(cors(
     {
-        origin: ["https://orbital-orcin.vercel.app"],
+        origin: ["https://focusfish-frontend-three.vercel.app/login"],
         methods: ["POST", "GET"],
         credentials: true
     }
