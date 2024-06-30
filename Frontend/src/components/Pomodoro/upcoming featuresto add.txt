@@ -1,0 +1,6 @@
+1. Create a edit button to edit the timings of the work, short and long break
+2. Integrate with backend to store the number of completed cycles of Pomodoro
+3. Add confetti for finishing a Pomodoro + congradulatory message
+4. After break is complete add a promt that asks "Do you want to go back to another Pomodoro"?
+5. At the bottom of the page show the number of hours and minutes (00h 00m) studied today
+6. Add a blocklist feature

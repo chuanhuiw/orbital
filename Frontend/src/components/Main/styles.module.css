@@ -1,0 +1,163 @@
+header{
+	
+	width: 100%;
+	height: 80px;
+	padding: 10px;
+	margin-bottom: 30px;
+
+  }
+
+
+  
+.white_btn {
+	border: none;
+	outline: none;
+	height: 50px;
+	background-color: white;
+	border-radius: 20px;
+	width: 120px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+	margin-left: 1100px;
+	transition: 0.5s;
+}
+
+.white_btn:hover{
+	background-color: #B2BABB;
+}
+
+.welcome_msg{
+	text-align: center;
+	color: whitesmoke;
+}
+
+.tagline{
+	text-align: center;
+	color: whitesmoke;
+	font-style: oblique;
+	font-size: 20px;
+}
+
+.button1{
+	margin-top: 30px;
+	margin-left: 100px;
+	width: 400px;
+	height: 250px;
+	background-image: url(./todo1.png);
+	background-position: centre;
+	border-radius: 35px;
+	cursor: pointer;
+	color: transparent;
+	font-size: 50px;
+	font-weight: bold;
+	transition: 0.5s;
+	font-family: fantasy;
+	border: none;
+}
+
+.button1:hover{
+	opacity: 70%;
+	color: #154360;
+}
+
+.button2{
+	margin-left: 30px;
+	width: 400px;
+	height: 250px;
+	background-image: url(./pomo1.png);
+	border-radius: 35px;
+	cursor: pointer;
+	color: transparent;
+	font-size: 50px;
+	font-weight: bold;
+	transition: 0.5s;
+	font-family: fantasy;
+	border: none;
+}
+
+.button2:hover{
+	opacity: 70%;
+	color: #154360;
+}
+
+.button3{
+	margin-left: 30px;
+	width: 400px;
+	height: 250px;
+	background-image: url(./calendar1.png);
+	border-radius: 35px;
+	cursor: pointer;
+	color: transparent;
+	font-size: 50px;
+	font-weight: bold;
+	transition: 0.5s;
+	font-family: fantasy;
+	border: none;
+}
+
+.button3:hover{
+	opacity: 70%;
+	color: #154360;
+}
+
+.button4{
+	margin-top: 30px;
+	margin-left: 100px;
+	width: 400px;
+	height: 250px;
+	background-image: url(./stats1.png);
+	border-radius: 35px;
+	cursor: pointer;
+	color: transparent;
+	font-size: 50px;
+	font-weight: bold;
+	transition: 0.5s;
+	font-family: fantasy;
+	border: none;
+}
+
+.button4:hover{
+	opacity: 70%;
+	color: #154360;
+}
+
+.button5{
+	margin-left: 30px;
+	width: 400px;
+	height: 250px;
+	background-image: url(./fish1.png);
+	border-radius: 35px;
+	cursor: pointer;
+	color: transparent;
+	font-size: 50px;
+	font-weight: bold;
+	transition: 0.5s;
+	font-family: fantasy;
+	border: none;
+}
+
+.button5:hover{
+	opacity: 70%;
+	color: #154360;
+}
+
+.button6{
+	margin-left: 30px;
+	width: 400px;
+	height: 250px;
+	background-image: url(./help1.png);
+	border-radius: 35px;
+	cursor: pointer;
+	color: transparent;
+	font-size: 50px;
+	font-weight: bold;
+	transition: 0.5s;
+	font-family: fantasy;
+	border: none;
+}
+
+.button6:hover{
+	opacity: 70%;
+	color: #154360;
+}

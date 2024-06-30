@@ -1,0 +1,261 @@
+body {
+    color: #ffffff;
+    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    font-size: 100%;
+}
+
+
+.text-left {
+    margin-top: 10px;
+    font-size: 30px;
+    text-align: center;
+    padding: 20px;
+}
+
+.logout_btn {
+    border: none;
+    outline: none;
+    height: 30px;
+    background-color: white;
+    border-radius: 20px;
+    width: 90px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 1100px;
+    transition: 0.5s;
+    box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+}
+
+.logout_btn:hover {
+    background-color: #B2BABB;
+}
+
+table, td, tr, th {
+    text-align: center;
+    font-size: 19px;
+    padding: 5px;
+    border: 1px solid;
+    border-color: whitesmoke;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: rgb(3, 63, 116);
+    padding: 10px;
+}
+
+tr:hover {
+    background-color: rgb(107, 170, 222);
+}
+
+table{
+    margin: 10px auto;
+    max-width: 1000px;
+    width: 90%;
+    height: 100px;
+    background-color: #497caf;
+    border-radius: 10px;
+}
+
+
+.delete_btn {
+    background-color: rgb(203, 75, 75);
+    cursor: pointer;
+    padding: 3px 7px;
+    border-radius: 3px;
+    margin-left: 15px;
+    transition: 0.5s;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.delete_btn:hover{
+    background-color: rgb(236, 167, 167);
+}
+
+.edit_btn {
+    background-color: rgb(3, 63, 116);
+    cursor: pointer;
+    padding: 3px 7px;
+    border-radius: 3px;
+    transition: 0.5s;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.edit_btn:hover{
+    background-color: #5d85ad;
+}
+
+.btn-success {
+    background-color: rgb(154, 227, 154);
+    color: black;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding: 3px 7px;
+    border-radius: 3px;
+    transition: 0.5s;
+}
+
+.btn-success:hover{
+    background-color: rgb(201, 237, 201);
+}
+
+.flag_btn{
+    background-color: rgb(37, 41, 44);
+    cursor: pointer;
+    padding: 3px 7px;
+    border-radius: 3px;
+    transition: 0.5s;
+    border: none;
+    color: white;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.flag_btn:hover{
+    background-color: rgb(136, 133, 133);
+}
+
+.col-md-5{
+    margin-top: 40px;
+    border: dashed;
+    border-color: black;
+    padding: 10px;
+    width: 400px;
+    background-color: #B2BABB;
+    opacity: 70%;
+    border-radius: 20px;
+    color: black;
+    transition: 0.5s;
+}
+
+.col-md-5:hover{
+    opacity: 90%;
+}
+
+
+.mb-3 {
+    padding: 10px;
+    font-weight: bold;
+}
+
+
+.input{
+    padding: 7px;
+    border-radius: 10px;
+    width:200px;
+}
+
+#status_input, #deadline_input, #task_input{
+    margin-left: 25px;
+}
+
+#deadline_input{
+    margin-right: 30px;
+}
+
+#status_input{
+    width: 100px;
+    margin-right: 110px;
+}
+
+/* Sidebar styling */
+.sidebar {
+    height: 100%;
+    width: 300px; /* width when un-collapsed */
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 90%;
+    background-color: #3c85ba;
+    padding-top: 20px;
+    overflow-x: hidden;
+    transition: width 0.3s;
+}
+
+.sidebar.collapsed {
+    width: 60px;
+}
+
+
+.sidebar_button1,.sidebar_button2,.sidebar_button3, .sidebar_button4{
+    width: 250px;
+    margin-top: 60px;
+    margin-left: 20px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.sidebar_button2, .sidebar_button3{
+    margin-top: 25px;
+}
+
+.smallsidebar_button1, .smallsidebar_button2, .smallsidebar_button3, .smallsidebar_button4{
+    width: 40px;
+    margin-top: 60px;
+    margin-left: 10px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.smallsidebar_button2, .smallsidebar_button3{
+    margin-top: 25px;
+}
+
+/* Button to toggle sidebar */
+.toggle-btn {
+    position: absolute;
+    top: 10px;
+    margin-left: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+}
+
+.main-content {
+    margin-left: 400px;
+    transition: margin-left 0.3s; /* Animation for content shift */
+    padding: 20px;
+}
+
+.main-content.collapsed {
+    margin-left: 60px; /* Margin for the main content when sidebar is collapsed */
+}
+
+.filterContainer{
+    margin-bottom: 20px;
+}
+
+.filter{
+    font-size: 25px;
+    padding: 5px;
+    margin-left: 40px;
+}
+
+.filterDropdown{
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: rgb(86, 160, 220);
+    border-radius: 10px;
+    padding: 10px;
+    color: whitesmoke;
+}
