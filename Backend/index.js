@@ -19,7 +19,7 @@ connection();
 
 app.use(cors(
     {
-        origin: ["https://focusfish-frontend-three.vercel.app/login"],
+        origin: ["https://focusfish-frontend-three.vercel.app"],
         methods: ["POST", "GET"],
         credentials: true
     }
