@@ -17,13 +17,14 @@ const getImportantListRoutes = require("./routes/getImportantList");
 //db connection
 connection();
 
-app.use(cors(
-    {
-        origin: ["https://focusfishorbital.vercel.app", "https://focusfishorbital-8etz9leke-nandhananm7s-projects.vercel.app"],
-        methods: ["POST", "GET"],
-        credentials: true
-    }
-));
+app.use(cors({
+    origin: ["https://focusfish.vercel.app", "https://focusfishorbital.vercel.app", "https://focusfishorbital-8etz9leke-nandhananm7s-projects.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true
+}));
+
+app.options('*', cors()); // handle preflight requests
+
 app.use(express.json())
 
 app.use("/api/users", userRoutes);
