@@ -19,7 +19,7 @@ connection();
 
 app.use(cors(
     {
-        origin: ["https://focusfish.netlify.app"],
+        origin: ["https://focusfishorbital.vercel.app/login"],
         methods: ["POST", "GET"],
         credentials: true
     }
