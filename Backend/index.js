@@ -19,7 +19,7 @@ connection();
 
 app.use(cors(
     {
-        origin: ["https://66821be17ebf5400085fcacd--focusfish.netlify.app/"],
+        origin: ["https://focusfish.netlify.app"],
         methods: ["POST", "GET"],
         credentials: true
     }
