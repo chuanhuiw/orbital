@@ -86,7 +86,7 @@ const Pomodoro = () => {
         todayData[currentDate] = (todayData[currentDate] || 0) + workSeconds;
         localStorage.setItem(`${username}_studyTime`, JSON.stringify(todayData));
 
-        axios.put('https://orbital-orcin.vercel.app/api/updatepomotime', {
+        axios.put('https://focusfish-backend-orbital.onrender.com/api/updatepomotime', {
           date: currentDate,
           seconds: todayData[currentDate],
           category: selectedCategory,
@@ -194,7 +194,7 @@ const Pomodoro = () => {
       todayData[currentDate] = (todayData[currentDate] || 0) + elapsedSessionSeconds;
       localStorage.setItem(`${username}_studyTime`, JSON.stringify(todayData));
 
-      axios.put('https://orbital-orcin.vercel.app/api/updatepomotime', {
+      axios.put('https://focusfish-backend-orbital.onrender.com/api/updatepomotime', {
         date: currentDate,
         seconds: todayData[currentDate],
         category: selectedCategory,

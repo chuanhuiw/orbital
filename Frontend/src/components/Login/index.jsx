@@ -28,7 +28,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const url = "https://orbital-orcin.vercel.app/api/auth";
+            const url = "https://focusfish-backend-orbital.onrender.com/api/auth";
             const { data: res } = await axios.post(url, data);
             localStorage.setItem("token", res.data.token);
             localStorage.setItem('username', res.data.username); // Store email as username
