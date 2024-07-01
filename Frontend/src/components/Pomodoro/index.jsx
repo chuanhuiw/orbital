@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
 import Confetti from 'react-confetti';
@@ -97,7 +97,7 @@ const Pomodoro = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, minutes, seconds, sessionStartTime]);
+  }, [isActive, minutes, seconds, sessionStartTime, handleMessage, handleTimerEnd, mode, modeDurations]);
 
   const handleModeChange = (newMode) => {
     setMode(newMode);
@@ -203,17 +203,17 @@ const Pomodoro = () => {
     setShowPopup(false);
   };
 
-  const handleMessage = () => {
+  const handleMessage = useCallback( () => {
     setCongratsMessage(messages[mode]);
     setShowMessage(true);
     setTimeout(() => {
       setShowMessage(false);
       window.location.reload(); 
     }, 10000);
-  };
+  }, [mode, messages]);
   
 
-  const handleTimerEnd = () => {
+  const handleTimerEnd = useCallback(() => {
     if (mode === 'pomodoro') {
       const workSeconds = newDurations.pomodoro * 60;
       const username = localStorage.getItem('username');
@@ -236,7 +236,7 @@ const Pomodoro = () => {
           console.error('Error updating pomodoro time:', error);
         });
     }
-  };
+  }, [currentDate, newDurations, selectedCategory, mode]);
 
   const displayStudyTime = () => {
     const hours = Math.floor(totalWorkSeconds / 3600);
