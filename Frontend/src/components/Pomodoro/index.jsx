@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import axios from 'axios';
-
 
 const Pomodoro = () => {
   const handleLogout = () => {
@@ -26,17 +25,18 @@ const Pomodoro = () => {
   });
   const [showMessage, setShowMessage] = useState(false);
   const [congratsMessage, setCongratsMessage] = useState('');
-  const messages = {
+
+  const messages = useMemo(() => ({
     pomodoro: "Well Done! You have completed the Pomodoro session!",
     shortBreak: "You have completed your short break!",
     longBreak: "Long break has ended!"
-  };
+  }), []);
 
-  const modeDurations = {
+  const modeDurations = useMemo(() => ({
     pomodoro: newDurations.pomodoro * 60,
     shortBreak: newDurations.shortBreak * 60,
     longBreak: newDurations.longBreak * 60
-  };
+  }), [newDurations]);
 
   const [totalWorkSeconds, setTotalWorkSeconds] = useState(0);
   const [sessionStartTime, setSessionStartTime] = useState(null);
@@ -53,7 +53,6 @@ const Pomodoro = () => {
 
     setTotalWorkSeconds(savedSeconds);
 
-    // Check for date change every minute
     const dateInterval = setInterval(() => {
       const newDate = formatCurrentDate();
       if (newDate !== currentDate) {
@@ -61,7 +60,7 @@ const Pomodoro = () => {
         setTotalWorkSeconds(0);
         localStorage.setItem(`${username}_studyTime`, JSON.stringify({ [newDate]: 0 }));
       }
-    }, 60000); // 60 seconds
+    }, 60000);
 
     return () => clearInterval(dateInterval);
   }, [currentDate]);
@@ -69,6 +68,38 @@ const Pomodoro = () => {
   useEffect(() => {
     let interval = null;
     const totalDuration = modeDurations[mode];
+
+    const handleMessage = () => {
+      setCongratsMessage(messages[mode]);
+      setShowMessage(true);
+      setTimeout(() => {
+        setShowMessage(false);
+        window.location.reload();
+      }, 10000);
+    };
+
+    const handleTimerEnd = () => {
+      if (mode === 'pomodoro') {
+        const workSeconds = newDurations.pomodoro * 60;
+        const username = localStorage.getItem('username');
+        const todayData = JSON.parse(localStorage.getItem(`${username}_studyTime`)) || {};
+        todayData[currentDate] = (todayData[currentDate] || 0) + workSeconds;
+        localStorage.setItem(`${username}_studyTime`, JSON.stringify(todayData));
+
+        axios.put('https://orbital-orcin.vercel.app/api/updatepomotime', {
+          date: currentDate,
+          seconds: todayData[currentDate],
+          category: selectedCategory,
+          username: username
+        })
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.error('Error updating pomodoro time:', error);
+          });
+      }
+    };
 
     if (isActive) {
       if (!sessionStartTime) {
@@ -97,7 +128,7 @@ const Pomodoro = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, minutes, seconds, sessionStartTime, handleMessage, handleTimerEnd, mode, modeDurations]);
+  }, [isActive, minutes, seconds, sessionStartTime, mode, modeDurations, newDurations, currentDate, messages, selectedCategory]);
 
   const handleModeChange = (newMode) => {
     setMode(newMode);
@@ -163,12 +194,10 @@ const Pomodoro = () => {
       todayData[currentDate] = (todayData[currentDate] || 0) + elapsedSessionSeconds;
       localStorage.setItem(`${username}_studyTime`, JSON.stringify(todayData));
 
-      // Update user's todaysPomodoroTime in the database
-      const studyTimeInSeconds = todayData[currentDate];
       axios.put('https://orbital-orcin.vercel.app/api/updatepomotime', {
         date: currentDate,
-        seconds: studyTimeInSeconds,
-        category: selectedCategory, // Include selected category here
+        seconds: todayData[currentDate],
+        category: selectedCategory,
         username: username
       })
         .then(response => {
@@ -203,41 +232,6 @@ const Pomodoro = () => {
     setShowPopup(false);
   };
 
-  const handleMessage = useCallback( () => {
-    setCongratsMessage(messages[mode]);
-    setShowMessage(true);
-    setTimeout(() => {
-      setShowMessage(false);
-      window.location.reload(); 
-    }, 10000);
-  }, [mode, messages]);
-  
-
-  const handleTimerEnd = useCallback(() => {
-    if (mode === 'pomodoro') {
-      const workSeconds = newDurations.pomodoro * 60;
-      const username = localStorage.getItem('username');
-      const todayData = JSON.parse(localStorage.getItem(`${username}_studyTime`)) || {};
-      todayData[currentDate] = (todayData[currentDate] || 0) + workSeconds;
-      localStorage.setItem(`${username}_studyTime`, JSON.stringify(todayData));
-
-      // Update user's todaysPomodoroTime in the database
-      const studyTimeInSeconds = todayData[currentDate];
-      axios.put('https://orbital-orcin.vercel.app/api/updatepomotime', {
-        date: currentDate,
-        seconds: studyTimeInSeconds,
-        category: selectedCategory, // Include selected category here
-        username: username
-      })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error('Error updating pomodoro time:', error);
-        });
-    }
-  }, [currentDate, newDurations, selectedCategory, mode]);
-
   const displayStudyTime = () => {
     const hours = Math.floor(totalWorkSeconds / 3600);
     const minutes = Math.floor((totalWorkSeconds % 3600) / 60);
@@ -248,7 +242,7 @@ const Pomodoro = () => {
   function formatCurrentDate() {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yy = String(today.getFullYear()).slice(-2);
 
     return `${dd}/${mm}/${yy}`;
@@ -273,17 +267,18 @@ const Pomodoro = () => {
     if (!selectedCategory) {
       return; // No category selected, do nothing
     }
-  
+
     const updatedCategories = categories.filter(cat => cat !== selectedCategory);
     setCategories(updatedCategories);
     setSelectedCategory(''); // Clear selected category after deletion
   };
-  
 
   return (
     <main className={styles.app}>
       <header>
-        <h1 className={styles.logo}>FocusFish <Link to="/main"><button className={styles.backButton}>🏠 Back to Dashboard</button></Link> <button className={styles.logout_btn} onClick={handleLogout}>Log out</button></h1>
+        <h1 className={styles.logo}>
+          FocusFish <Link to="/main"><button className={styles.backButton}>🏠 Back to Dashboard</button></Link> <button className={styles.logout_btn} onClick={handleLogout}>Log out</button>
+        </h1>
       </header>
       {showMessage && (
         <div className={styles.congratsMessage}>
@@ -291,7 +286,7 @@ const Pomodoro = () => {
           <Confetti />
         </div>
       )}
-      
+
       <progress id="js-progress" value={progress} max="100"></progress>
       <div className={styles.progressBar}></div>
       <div className={styles.timer}>
@@ -327,18 +322,18 @@ const Pomodoro = () => {
           <span id="js-seconds">{String(seconds).padStart(2, '0')}</span>
         </div>
         <div className={styles.buttonGroup}>
-        <div>
-        <button className={styles.editButton} data-action="edit" onClick={handleChangeDurations}>
-          Edit
-        </button>
-        </div>
+          <div>
+            <button className={styles.editButton} data-action="edit" onClick={handleChangeDurations}>
+              Edit
+            </button>
+          </div>
           <button className={styles.mainButton} data-action="start" id="js-btn" onClick={toggleStartStop}>
             {isActive ? 'Stop' : 'Start'}
           </button>
           <button className={styles.resetButton} data-action="reset" onClick={resetTimer}>
             Reset
           </button>
-        </div> 
+        </div>
       </div>
       {showPopup && (
         <div className={styles.popupContainer}>
