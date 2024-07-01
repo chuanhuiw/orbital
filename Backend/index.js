@@ -36,5 +36,5 @@ app.use("/api/deleteTodoList", deleteTodoListRoutes);
 app.use("/api/toggleFlaggedTodo", toggleFlaggedTodo);
 app.use("/api/getImportantList", getImportantListRoutes);
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Listening on port ${port}...`))
