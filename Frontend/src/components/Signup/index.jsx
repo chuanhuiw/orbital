@@ -22,7 +22,8 @@ const Signup = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
-            const url = "https://focusfish-backend-orbital.onrender.com/api/users";
+            const url = "http://127.0.0.1:8080/api/users";
+           // const url = "https://focusfish-backend-orbital.onrender.com/api/users";
             const { data: res } = await axios.post(url, data);
             navigate("/login");
             console.log(res.message);

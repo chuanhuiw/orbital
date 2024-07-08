@@ -6,13 +6,14 @@ const passwordComplexity = require('joi-password-complexity');
 const userSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    studyTimes: {
-        date: { type: String },
+    categories: { type: [String], default: []},
+    studyTimes: [{
+        date: { type: Date },
         seconds: { type: Number },
         category: {type: String},
-    }
+    }]
 });
 
 

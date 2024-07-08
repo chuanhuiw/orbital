@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styles from './styles.module.css';
 
-
 const oceanFacts = [
     "The ocean covers more than 70% of the Earth's surface.",
     "Over 80% of the ocean is unexplored and unmapped.",
@@ -28,22 +27,24 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const url = "https://focusfish-backend-orbital.onrender.com/api/auth";
+            const url = "http://127.0.0.1:8080/api/auth";
             const { data: res } = await axios.post(url, data);
             localStorage.setItem("token", res.data.token);
-            localStorage.setItem('username', res.data.username); // Store email as username
-            localStorage.setItem("firstName", res.data.firstName); //stores first name of user to be used in welcome message
+            localStorage.setItem('username', res.data.username);
+            localStorage.setItem("firstName", res.data.firstName);
             window.location = "/";
         } catch (error) {
-            if ((error.response) && (error.response.status >= 400) && (error.response.status <= 500))
+            if (error.response && error.response.status >= 400 && error.response.status <= 500) {
                 setError(error.response.data.message);
+            }
         }
     };
+
 
     useEffect(() => {
         const interval = setInterval(() => {
             setFactIndex(prevIndex => (prevIndex + 1) % oceanFacts.length);
-        }, 10000); 
+        }, 10000);
 
         return () => clearInterval(interval); // Clear interval on component unmount
     }, []);
@@ -78,6 +79,10 @@ const Login = () => {
                             />
                             {error && <div className={styles.error_msg}>{error}</div>}
                             <button type="submit" className={styles.green_btn}>Login!</button>
+                            {/* <p>OR</p>
+                            <button className={styles.google_btn} onClick={handleGoogleSignup}>
+                                Sign up with Google
+                            </button> */}
                         </form>
                     </div>
                     <div className={styles.right}>

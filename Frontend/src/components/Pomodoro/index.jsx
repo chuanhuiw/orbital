@@ -12,6 +12,15 @@ const Pomodoro = () => {
     window.location.href = "/login";
   };
 
+  function formatCurrentDate() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yy = String(today.getFullYear()).slice(-2);
+
+    return `${dd}/${mm}/${yy}`;
+  };
+
   const [mode, setMode] = useState('pomodoro');
   const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(0);
@@ -42,7 +51,7 @@ const Pomodoro = () => {
   const [sessionStartTime, setSessionStartTime] = useState(null);
   const [elapsedSessionSeconds, setElapsedSessionSeconds] = useState(0);
   const [currentDate, setCurrentDate] = useState(formatCurrentDate());
-  const [categories, setCategories] = useState(['work', 'school', 'exam']);
+  const [categories, setCategories] = useState(["Orbital"]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [newCategory, setNewCategory] = useState('');
 
@@ -66,6 +75,20 @@ const Pomodoro = () => {
   }, [currentDate]);
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      const username = localStorage.getItem('username');
+      try {
+        const response = await axios.get(`http://127.0.0.1:8080/api/getCategories/${username}`);
+        setCategories(response.data);
+        setSelectedCategory(response.data[0] || '');
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
     let interval = null;
     const totalDuration = modeDurations[mode];
 
@@ -86,7 +109,7 @@ const Pomodoro = () => {
         todayData[currentDate] = (todayData[currentDate] || 0) + workSeconds;
         localStorage.setItem(`${username}_studyTime`, JSON.stringify(todayData));
 
-        axios.put('https://focusfish-backend-orbital.onrender.com/api/updatepomotime', {
+        axios.put('http://127.0.0.1:8080/api/updatepomotime', {
           date: currentDate,
           seconds: todayData[currentDate],
           category: selectedCategory,
@@ -194,7 +217,7 @@ const Pomodoro = () => {
       todayData[currentDate] = (todayData[currentDate] || 0) + elapsedSessionSeconds;
       localStorage.setItem(`${username}_studyTime`, JSON.stringify(todayData));
 
-      axios.put('https://focusfish-backend-orbital.onrender.com/api/updatepomotime', {
+      axios.put('http://127.0.0.1:8080/api/updatepomotime', {
         date: currentDate,
         seconds: todayData[currentDate],
         category: selectedCategory,
@@ -239,15 +262,6 @@ const Pomodoro = () => {
     return `${hours} hours, ${minutes} minutes, and ${seconds} seconds`;
   };
 
-  function formatCurrentDate() {
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yy = String(today.getFullYear()).slice(-2);
-
-    return `${dd}/${mm}/${yy}`;
-  }
-
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   };
@@ -256,22 +270,45 @@ const Pomodoro = () => {
     setNewCategory(e.target.value);
   };
 
-  const handleAddCategory = () => {
-    if (newCategory && !categories.includes(newCategory)) {
-      setCategories([...categories, newCategory]);
+  const handleAddCategory = async () => {
+    if (newCategory.trim() !== '') {
+      const updatedCategories = [...categories, newCategory];
+      setCategories(updatedCategories);
+      setSelectedCategory(newCategory);
+  
+      const username = localStorage.getItem('username');
+      try {
+        const response = await axios.post('http://127.0.0.1:8080/api/addCategory', {
+          username: username,
+          category: newCategory
+        });
+        console.log('New category added successfully', response.data);
+      } catch (error) {
+        console.error('Error adding new category:', error);
+      }
+  
       setNewCategory('');
     }
   };
 
-  const handleDeleteCategory = () => {
-    if (!selectedCategory) {
-      return; // No category selected, do nothing
-    }
-
-    const updatedCategories = categories.filter(cat => cat !== selectedCategory);
+  const handleDeleteCategory = async (categoryToDelete) => {
+    const updatedCategories = categories.filter(category => category !== categoryToDelete);
     setCategories(updatedCategories);
-    setSelectedCategory(''); // Clear selected category after deletion
+
+    const username = localStorage.getItem('username');
+    await axios.delete(`http://127.0.0.1:8080/api/deleteCategory/${username}/${categoryToDelete}`)
+    .then(response => {
+      console.log('Category deleted successfully');
+    })
+    .catch(error => {
+      console.error('Error deleting category:', error);
+    });
+
+    if (selectedCategory === categoryToDelete && updatedCategories.length > 0) {
+      setSelectedCategory(updatedCategories[0]);
+    }
   };
+
 
   return (
     <main className={styles.app}>
@@ -357,7 +394,7 @@ const Pomodoro = () => {
           </div>
         </div>
       )}
-      <div className={styles.categoryDropdown}>
+      <div className={styles.categoryDropdown} placeholder="No category selected">
         <select className={styles.categorySelect} value={selectedCategory} onChange={handleCategoryChange}>
           {categories.map(category => (
             <option key={category} value={category}>

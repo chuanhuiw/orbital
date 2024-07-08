@@ -13,14 +13,18 @@ router.put('/', async (req, res) => {
             return res.status(404).send({ message: 'User not found' });
         }
 
-        // Update or create the studyTimes object
-        user.studyTimes = {
-            date,
-            seconds,
-            category
-        };
+        // Find if there is an existing study time entry for the given date and category
+        const existingEntry = user.studyTimes.find(entry => entry.date === date && entry.category === category);
 
-        // Save updated user object
+        if (existingEntry) {
+            // If an entry exists, update the seconds
+            existingEntry.seconds += seconds;
+        } else {
+            // If no entry exists, add a new one
+            user.studyTimes.push({ date, seconds, category });
+        }
+
+        // Save the updated user object
         await user.save();
 
         console.log('Study time updated successfully');
