@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
 import Confetti from 'react-confetti';
@@ -30,7 +30,8 @@ const Pomodoro = () => {
   const [newDurations, setNewDurations] = useState({
     pomodoro: 25,
     shortBreak: 5,
-    longBreak: 15
+    longBreak: 15,
+    cyclesBeforeLongBreak: 3 //default values
   });
   const [showMessage, setShowMessage] = useState(false);
   const [congratsMessage, setCongratsMessage] = useState('');
@@ -54,6 +55,7 @@ const Pomodoro = () => {
   const [categories, setCategories] = useState(["Orbital"]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [newCategory, setNewCategory] = useState('');
+  const[completedPomodoros, setCompletedPomodoros] = useState(0);
 
   useEffect(() => {
     const username = localStorage.getItem('username');
@@ -88,6 +90,28 @@ const Pomodoro = () => {
     fetchCategories();
   }, []);
 
+  const handleModeChange = useCallback((newMode) => {
+    setMode(newMode);
+    switch (newMode) {
+      case 'pomodoro':
+        setMinutes(newDurations.pomodoro);
+        break;
+      case 'shortBreak':
+        setMinutes(newDurations.shortBreak);
+        break;
+      case 'longBreak':
+        setMinutes(newDurations.longBreak);
+        break;
+      default:
+        break;
+    }
+    setSeconds(0);
+    setIsActive(false);
+    setProgress(0);
+    setElapsedSessionSeconds(0);
+    setSessionStartTime(null);
+  }, [newDurations]);
+
   useEffect(() => {
     let interval = null;
     const totalDuration = modeDurations[mode];
@@ -95,6 +119,7 @@ const Pomodoro = () => {
     const handleMessage = () => {
       setCongratsMessage(messages[mode]);
       setShowMessage(true);
+      alert(messages[mode]);
       setTimeout(() => {
         setShowMessage(false);
         window.location.reload();
@@ -121,7 +146,20 @@ const Pomodoro = () => {
           .catch(error => {
             console.error('Error updating pomodoro time:', error);
           });
-      }
+
+          setCompletedPomodoros((prev) => prev + 1);
+
+          if (completedPomodoros + 1 >= newDurations.cyclesBeforeLongBreak){
+            handleModeChange('longBreak');
+            setCompletedPomodoros(0);
+          } else {
+            handleModeChange('shortBreak');
+          }
+        } else if (mode === 'shortBreak'){
+          handleModeChange('pomodoro');
+        } else if (mode === 'longBreak'){
+          handleModeChange('pomodoro');
+        }
     };
 
     if (isActive) {
@@ -151,29 +189,7 @@ const Pomodoro = () => {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, minutes, seconds, sessionStartTime, mode, modeDurations, newDurations, currentDate, messages, selectedCategory]);
-
-  const handleModeChange = (newMode) => {
-    setMode(newMode);
-    switch (newMode) {
-      case 'pomodoro':
-        setMinutes(newDurations.pomodoro);
-        break;
-      case 'shortBreak':
-        setMinutes(newDurations.shortBreak);
-        break;
-      case 'longBreak':
-        setMinutes(newDurations.longBreak);
-        break;
-      default:
-        break;
-    }
-    setSeconds(0);
-    setIsActive(false);
-    setProgress(0);
-    setElapsedSessionSeconds(0);
-    setSessionStartTime(null);
-  };
+  }, [isActive, minutes, seconds, sessionStartTime, mode, modeDurations, newDurations, currentDate, messages, selectedCategory, completedPomodoros, handleModeChange]);
 
   const toggleStartStop = () => {
     if (isActive) {
@@ -243,7 +259,22 @@ const Pomodoro = () => {
 
   const handleDurationChange = (e) => {
     const { name, value } = e.target;
-    const newValue = Math.max(5, Number(value));
+    let newValue = Number(value);
+  
+    // Apply min/max constraints for specific fields
+    switch (name) {
+      case 'pomodoro':
+      case 'shortBreak':
+      case 'longBreak':
+        newValue = Math.max(5, newValue);
+        break;
+      case 'cyclesBeforeLongBreak':
+        newValue = Math.max(2, Math.min(10, newValue));
+        break;
+      default:
+        break;
+    }
+  
     setNewDurations({
       ...newDurations,
       [name]: newValue
@@ -387,6 +418,10 @@ const Pomodoro = () => {
             <h3 className={styles.popupHeading}>Long Break Duration (minutes):</h3>
             <div>
               <input className={styles.inputs} type="number" name="longBreak" value={newDurations.longBreak} onChange={handleDurationChange} min="5" />
+            </div>
+            <h3 className={styles.popupHeading}>Cycles before Long Break:</h3>
+            <div>
+              <input className={styles.inputs} type="number" name="cyclesBeforeLongBreak" value={newDurations.cyclesBeforeLongBreak} onChange={handleDurationChange} min={2} max = {10} />
             </div>
             <button className={styles.saveButton} onClick={handleSaveDurations}>Save</button>
           </div>
