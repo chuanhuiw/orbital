@@ -93,10 +93,10 @@ const DraggableTask = ({ task, index, moveTask, editableId, setEditableId, edite
                 ) : (
                     <>
                         <button className="edit_btn" onClick={() => toggleEditable(task._id)}>
-                            Edit
+                            ✏️
                         </button>
                         <button className="delete_btn" onClick={() => deleteTask(task._id)}>
-                            Delete
+                            🗑️
                         </button>
                         <button className={`flag_btn ${task.flagged ? 'flagged' : ''}`} onClick={() => toggleFlagged(task._id, task.flagged)}>
                             {task.flagged ? '📌' : 'Flag'}
@@ -247,30 +247,35 @@ function Todo() {
 
     const filterTasks = (option) => {
         const today = new Date();
-        const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-        const endOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-        today.setHours(0, 0, 0, 0);
-        
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1)); // Adjust start to previous Sunday if today is Sunday
+        startOfWeek.setHours(0, 0, 0, 0);
+    
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6); // End of current week (Saturday)
+        endOfWeek.setHours(23, 59, 59, 999);
+    
         let filtered = [];
         switch(option) {
             case "Today":
                 filtered = todoList.filter(task => {
                     const deadline = new Date(task.deadline);
-                    return deadline.toDateString() === new Date().toDateString();
+                    return deadline.toDateString() === today.toDateString();
                 });
                 break;
             case "Tomorrow":
+                const tomorrow = new Date(today);
+                tomorrow.setDate(today.getDate() + 1);
+                tomorrow.setHours(0, 0, 0, 0);
                 filtered = todoList.filter(task => {
                     const deadline = new Date(task.deadline);
-                    const tomorrow = new Date(today);
-                    tomorrow.setDate(today.getDate() + 1);
                     return deadline.toDateString() === tomorrow.toDateString();
                 });
                 break;
             case "This Week":
                 filtered = todoList.filter(task => {
                     const deadline = new Date(task.deadline);
-                    return (deadline >= startOfWeek) && (deadline <= endOfWeek);
+                    return deadline >= startOfWeek && deadline <= endOfWeek;
                 });
                 break;
             case "Later":
@@ -285,8 +290,8 @@ function Todo() {
         }
         setFilteredToDoList(filtered);
         setSelectedFilter(option);
-    }
-
+    };
+    
     const moveTask = (fromIndex, toIndex) => {
         const updatedList = [...todoList];
         const [movedTask] = updatedList.splice(fromIndex, 1);
