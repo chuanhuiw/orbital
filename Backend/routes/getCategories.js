@@ -6,7 +6,7 @@ router.get('/:username', async (req, res) => {
     const { username } = req.params;
   
     try {
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ email: username });
   
       if (user) {
         res.json(user.categories);

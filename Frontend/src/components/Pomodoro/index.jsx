@@ -292,20 +292,18 @@ const Pomodoro = () => {
   };
 
   const handleDeleteCategory = async (categoryToDelete) => {
-    const updatedCategories = categories.filter(category => category !== categoryToDelete);
-    setCategories(updatedCategories);
-
     const username = localStorage.getItem('username');
-    await axios.delete(`http://127.0.0.1:8080/api/deleteCategory/${username}/${categoryToDelete}`)
-    .then(response => {
-      console.log('Category deleted successfully');
-    })
-    .catch(error => {
+    try {
+      await axios.delete(`http://127.0.0.1:8080/api/deleteCategory/${username}/${encodeURIComponent(categoryToDelete)}`);
+      const updatedCategories = categories.filter(category => category !== categoryToDelete);
+      setCategories(updatedCategories);
+      if (updatedCategories.length > 0) {
+        setSelectedCategory(updatedCategories[0]);
+      } else {
+        setSelectedCategory('');
+      }
+    } catch (error) {
       console.error('Error deleting category:', error);
-    });
-
-    if (selectedCategory === categoryToDelete && updatedCategories.length > 0) {
-      setSelectedCategory(updatedCategories[0]);
     }
   };
 
@@ -410,7 +408,7 @@ const Pomodoro = () => {
           placeholder="Create New Category"
         />
         <button className={styles.addButton} onClick={handleAddCategory}>Add</button>
-        <button className={styles.deleteButton} onClick={handleDeleteCategory}>Delete</button>
+        <button className={styles.deleteButton} onClick={() => handleDeleteCategory(selectedCategory)}>Delete</button>
       </div>
       <div className={styles.dailySummary}>
         <p>{currentDate}</p>

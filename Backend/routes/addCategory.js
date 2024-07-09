@@ -6,7 +6,7 @@ router.post('/', async (req, res) => {
     const { username, category } = req.body;
   
     try {
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email: username });
   
         if (user) {
             if (!user.categories) {
