@@ -5,7 +5,7 @@ import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import './index.css';
 
-const DraggableTask = ({ task, index, moveTask, editableId, setEditableId, editedTask, setEditedTask, editedStatus, setEditedStatus, editedDeadline, setEditedDeadline, saveEditedTask, deleteTask, toggleEditable, statusOptions, toggleFlagged }) => {
+const DraggableTask = ({ task, index, moveTask, editableId, setEditableId, editedTask, setEditedTask, editedStatus, setEditedStatus, editedDeadline, setEditedDeadline, saveEditedTask, deleteTask, toggleEditable, statusOptions, toggleFlagged, markAsComplete }) => {
     const ref = useRef(null);
 
     const [, drop] = useDrop({
@@ -101,6 +101,9 @@ const DraggableTask = ({ task, index, moveTask, editableId, setEditableId, edite
                         <button className={`flag_btn ${task.flagged ? 'flagged' : ''}`} onClick={() => toggleFlagged(task._id, task.flagged)}>
                             {task.flagged ? '📌' : 'Flag'}
                         </button>
+                        <button className="complete_btn" onClick={() => markAsComplete(task._id)}>
+                            ✅
+                        </button>
                     </>
                 )}
             </td>
@@ -138,8 +141,9 @@ function Todo() {
         axios.get('http://127.0.0.1:8080/api/getTodoList', {params: { userEmail } })
        // axios.get('https://focusfish-backend-orbital.onrender.com/api/getTodoList', {params: { userEmail } })
             .then(result => {
-                setTodoList(result.data);
-                setFilteredToDoList(result.data);
+                const incompleteTasks = result.data.filter(task => task.status !== "done");
+                setTodoList(incompleteTasks);
+                setFilteredToDoList(incompleteTasks);
             })
             .catch(err => console.log(err));
     }, []);
@@ -260,7 +264,7 @@ function Todo() {
             case "Today":
                 filtered = todoList.filter(task => {
                     const deadline = new Date(task.deadline);
-                    return deadline.toDateString() === today.toDateString();
+                    return deadline.toDateString() === today.toDateString() && task.status !== "done";
                 });
                 break;
             case "Tomorrow":
@@ -269,28 +273,29 @@ function Todo() {
                 tomorrow.setHours(0, 0, 0, 0);
                 filtered = todoList.filter(task => {
                     const deadline = new Date(task.deadline);
-                    return deadline.toDateString() === tomorrow.toDateString();
+                    return deadline.toDateString() === tomorrow.toDateString() && task.status !== "done";
                 });
                 break;
             case "This Week":
                 filtered = todoList.filter(task => {
                     const deadline = new Date(task.deadline);
-                    return deadline >= startOfWeek && deadline <= endOfWeek;
+                    return deadline >= startOfWeek && deadline <= endOfWeek && task.status !== "done";
                 });
                 break;
             case "Later":
                 filtered = todoList.filter(task => {
                     const deadline = new Date(task.deadline);
-                    return deadline > endOfWeek;
+                    return deadline > endOfWeek && task.status !== "done";
                 });
                 break;
             default:
-                filtered = todoList;
+                filtered = todoList.filter(task => task.status !== "done");
                 break;
         }
         setFilteredToDoList(filtered);
         setSelectedFilter(option);
     };
+    
     
     const moveTask = (fromIndex, toIndex) => {
         const updatedList = [...todoList];
@@ -298,6 +303,27 @@ function Todo() {
         updatedList.splice(toIndex, 0, movedTask);
         setTodoList(updatedList);
         setFilteredToDoList(updatedList);
+    };
+
+    const markAsComplete = (id) => {
+        const userEmail = localStorage.getItem('username');
+        const updatedData = { status: 'done', userEmail };
+
+        axios.post('http://127.0.0.1:8080/api/updateTodoList/' + id, updatedData)
+        // axios.post('https://focusfish-backend-orbital.onrender.com/api/updateTodoList/' + id, updatedData)
+            .then(result => {
+                console.log(result);
+                // Update the task status in the todoList
+                const updatedTodoList = todoList.map(task => {
+                    if (task._id === id) {
+                        return { ...task, status: 'done' };
+                    }
+                    return task;
+                });
+                setTodoList(updatedTodoList);
+                setFilteredToDoList(updatedTodoList);
+            })
+            .catch(err => console.log(err));
     };
 
     return (
@@ -324,7 +350,12 @@ function Todo() {
                                     📌 Important
                                 </button>
                             </Link>
-                            <button className="sidebar_button3">✅ Completed</button>
+                            <Link to="/completedTodo">
+                                <button className="sidebar_button3">
+                                    ✅ Completed
+                                </button>
+                            </Link>
+                        
                         </div>
                     ) : (
                         <div>
@@ -343,7 +374,11 @@ function Todo() {
                                     📌
                                 </button>
                             </Link>
-                            <button className="smallsidebar_button3">✅</button>
+                            <Link to="/completedTodo">
+                            <button className="smallsidebar_button3">
+                                ✅
+                            </button>
+                            </Link>
                         </div>
                     )}
                 </div>
@@ -391,6 +426,7 @@ function Todo() {
                                                     toggleEditable={toggleEditable}
                                                     statusOptions={statusOptions}
                                                     toggleFlagged={toggleFlagged}
+                                                    markAsComplete={markAsComplete}
                                                 />
                                             ))}
                                         </tbody>

@@ -5,7 +5,7 @@ import Login from './components/Login';
 import Pomodoro from './components/Pomodoro';
 import Todo from './components/Todo';
 import ImportantTodo from './components/ImportantTodo';
-
+import CompletedTodo from './components/CompletedTasks';
 
 function App() {
   const user = localStorage.getItem("token")
@@ -17,6 +17,7 @@ function App() {
       <Route path="/pomodoro" exact element={<Pomodoro/>}/>
       <Route path="/todo" exact element={<Todo/>}/>
       <Route path="/importantTodo" exact element={<ImportantTodo/>}/>
+      <Route path="/completedTodo" exact element={<CompletedTodo/>}/>
       <Route path="/main" exact element={<Main/>}/>
       <Route path="/" exact element={<Navigate replace to="/login"/>}/>
     </Routes>

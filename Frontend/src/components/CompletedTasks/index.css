@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.heading{
+    margin-top: 40px;
+}
+
+.tagline{
+    font-size: 20px;
+}
+
+.sidebar {
+    transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: 60px; /* Adjust the width of the collapsed sidebar */
+}
+
+.sidebar.expanded {
+    width: 300px; /* Adjust the width of the expanded sidebar */
+}
+
+.main-content {
+    margin-left: 400px;
+    transition: margin-left 0.3s; /* Animation for content shift */
+    padding: 20px;
+}
+
+.main-content.expanded {
+    width: calc(100% - 200px); /* Adjust this margin to match the expanded sidebar width */
+}
+
+.main-content.collapsed {
+    width: calc(100% - 50px); /* Adjust this margin to match the collapsed sidebar width */
+    margin-left: 60px; /* Margin for the main content when sidebar is collapsed */
+}
+
+.centered {
+    text-align: center;
+}
+
+.table {
+    margin: 0 auto; /* Center the table */
+}
+

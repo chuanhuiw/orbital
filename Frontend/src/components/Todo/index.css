@@ -90,6 +90,22 @@ table{
     background-color: #5d85ad;
 }
 
+.complete_btn{
+    background-color: rgb(3, 63, 116);
+    cursor: pointer;
+    padding: 3px 7px;
+    border-radius: 3px;
+    transition: 0.5s;
+    border: none;
+    color: white;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.complete_btn:hover{
+    background-color: #5d85ad;
+}
+
 .btn-success {
     background-color: rgb(154, 227, 154);
     color: black;

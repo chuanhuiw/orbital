@@ -8,3 +8,24 @@
 .tagline{
     margin-bottom: 40px;
 }
+
+.filterContainer{
+    margin-bottom: 20px;
+}
+
+.filter{
+    font-size: 25px;
+    padding: 5px;
+    margin-left: 40px;
+}
+
+.filterDropdown{
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: rgb(86, 160, 220);
+    border-radius: 10px;
+    padding: 10px;
+    color: whitesmoke;
+}
