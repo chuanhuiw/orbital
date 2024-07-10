@@ -15,6 +15,7 @@ const getImportantListRoutes = require("./routes/getImportantList");
 const deleteCategory = require("./routes/deleteCategory");
 const addCategory = require("./routes/addCategory");
 const getCategories = require("./routes/getCategories");
+const getCompletedList = require("./routes/getCompletedList");
 
 //db connection
 connection();
@@ -43,6 +44,7 @@ app.use("/api/getImportantList", getImportantListRoutes);
 app.use("/api/deleteCategory", deleteCategory);
 app.use("/api/addCategory", addCategory);
 app.use("/api/getCategories", getCategories);
+app.use("/api/getCompletedList", getCompletedList);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}...`))
