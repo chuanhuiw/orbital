@@ -9,7 +9,8 @@ const Signup = () => {
         firstName: "",
         lastName: "",
         email: "",
-        password: ""
+        password: "",
+        confirmPassword: ""
     });
 
     const [error, setError] = useState("");
@@ -21,10 +22,19 @@ const Signup = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+
+        if (data.password !== data.confirmPassword){
+            setError("Passwords do not match");
+            return;
+        }
+
+        //removes confirm password from the structure after checking if it matches (don't need to send to backend)
+        const { confirmPassword, ...dataToSend } = data;
+
         try {
             const url = "http://127.0.0.1:8080/api/users";
            // const url = "https://focusfish-backend-orbital.onrender.com/api/users";
-            const { data: res } = await axios.post(url, data);
+            const { data: res } = await axios.post(url, dataToSend);
             navigate("/login");
             console.log(res.message);
         } catch (error) {
@@ -79,6 +89,15 @@ const Signup = () => {
                             value={data.password}
                             required
                             className={styles.input}
+                        />
+                        <input
+                                type="password"
+                                placeholder="Confirm Password"  // New input field for confirm password
+                                name="confirmPassword"
+                                onChange={handleChange}
+                                value={data.confirmPassword}
+                                required
+                                className={styles.input}
                         />
                         {error && <div className={styles.error_msg}>{error}</div>}
                         <button type="submit" className={styles.green_btn}>Sign Up!</button>
