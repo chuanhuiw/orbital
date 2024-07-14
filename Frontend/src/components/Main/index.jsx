@@ -30,7 +30,7 @@ const Main = () => {
         <div className={styles.main_container}>
         <Link to="/Todo"><button className={styles.button1}>ToDo</button></Link> 
         <Link to="/Pomodoro"><button className={styles.button2}>Pomodoro</button></Link> 
-        <button className={styles.button3}>Calendar</button>
+        <Link to="/Calendar"><button className={styles.button3}>Calendar</button></Link> 
         <button className={styles.button4}>My Stats</button>
         <button className={styles.button5}>Aquarium</button> 
         <button className={styles.button6}>Help</button>
