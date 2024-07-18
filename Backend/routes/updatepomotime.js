@@ -28,16 +28,25 @@ router.put('/', async (req, res) => {
             return res.status(404).send({ message: 'User not found' });
         }
 
-        // Find if there is an existing study time entry for the given date and category
-        const existingEntry = user.studyTimes.find(entry => entry.date === isoDate && entry.category === category);
+        console.log('Before update:', user.studyTimes);
 
-        if (existingEntry) {
+        // Ensure user.studyTimes is initialized
+        if (!user.studyTimes) {
+            user.studyTimes = [];
+        }
+
+        // Find if there is an existing study time entry for the given date and category
+        const existingEntryIndex = user.studyTimes.findIndex(entry => entry.date === isoDate && entry.category === category);
+
+        if (existingEntryIndex !== -1) {
             // If an entry exists, update the seconds
-            existingEntry.seconds += seconds;
+            user.studyTimes[existingEntryIndex].seconds += seconds;
         } else {
             // If no entry exists, add a new one
             user.studyTimes.push({ date: isoDate, seconds, category });
         }
+
+        console.log('After update:', user.studyTimes);
 
         // Save the updated user object
         await user.save();
