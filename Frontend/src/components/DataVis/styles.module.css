@@ -11,6 +11,13 @@
     margin-top: 20px;
 }
 
+.chartWrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+
 .chartContainer{
     margin-top: 50px;
     margin-left: 20px;
