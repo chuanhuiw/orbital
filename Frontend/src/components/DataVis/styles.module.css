@@ -1,0 +1,85 @@
+.heading, .tagline{
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    margin-top: 10px;
+}
+
+.tagline{
+    font-size: 20px;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+.chartContainer{
+    margin-top: 50px;
+    margin-left: 20px;
+    background-color: rgba(7, 10, 55);
+    opacity: 90%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(234, 230, 230, 0.93);
+    width: 50%; 
+    margin: 0 auto;
+}
+
+.chartContainer:hover{
+    opacity: 100%;
+}
+
+.selectView{
+    margin: 40px;
+}
+
+.viewSelect{
+    width: 150px;
+    height: 40px;
+    text-align: center;
+    font-weight: bold;
+    margin-left: 10px;
+    border-radius: 10px;
+    background-color: rgba(7, 10, 55);
+    box-shadow: 0 4px 8px rgba(234, 230, 230, 0.93);
+    color:antiquewhite;
+}
+
+.backButton{
+    height: 30px;
+    width: 160px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.5s;
+    margin-top: 10px;
+    margin-left: 30px;
+    box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+  }
+  
+  .backButton:hover{
+    background-color: #B2BABB;
+  }
+  
+  .logout_btn {
+  border: none;
+  outline: none;
+  height: 30px;
+  background-color: white;
+  border-radius: 10px;
+  width: 120px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 930px;
+  transition: 0.5s;
+  box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+  }
+  
+  .logout_btn:hover{
+  background-color: #B2BABB;
+  }
+
+  .logo{
+    padding-left: 20px;
+    padding-top: 20px;
+  }

@@ -6,6 +6,7 @@ import Pomodoro from './components/Pomodoro';
 import Todo from './components/Todo';
 import ImportantTodo from './components/ImportantTodo';
 import CompletedTodo from './components/CompletedTasks';
+import DataVis from './components/DataVis';
 
 function App() {
   const user = localStorage.getItem("token")
@@ -18,6 +19,7 @@ function App() {
       <Route path="/todo" exact element={<Todo/>}/>
       <Route path="/importantTodo" exact element={<ImportantTodo/>}/>
       <Route path="/completedTodo" exact element={<CompletedTodo/>}/>
+      <Route path="/dataVis" exact element={<DataVis/>}/>
       <Route path="/main" exact element={<Main/>}/>
       <Route path="/" exact element={<Navigate replace to="/login"/>}/>
     </Routes>
