@@ -46,7 +46,6 @@ const Pomodoro = () => {
 
   const [totalWorkSeconds, setTotalWorkSeconds] = useState(0);
   const [sessionStartTime, setSessionStartTime] = useState(null);
-  const [elapsedSessionSeconds, setElapsedSessionSeconds] = useState(0);
   const [currentDate, setCurrentDate] = useState(formatCurrentDate());
   const [categories, setCategories] = useState(["Orbital"]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
@@ -104,7 +103,6 @@ const Pomodoro = () => {
     setSeconds(0);
     setIsActive(false);
     setProgress(0);
-    setElapsedSessionSeconds(0);
     setSessionStartTime(null);
   }, [newDurations]);
 
@@ -132,7 +130,7 @@ const Pomodoro = () => {
 
         axios.put('http://127.0.0.1:8080/api/updatepomotime', {
           date: currentDate,
-          seconds: todayData[currentDate],
+          seconds: workSeconds,
           category: selectedCategory,
           username: username
         })
@@ -178,7 +176,6 @@ const Pomodoro = () => {
         }
         const elapsedTime = totalDuration - (minutes * 60 + seconds);
         setProgress((elapsedTime / totalDuration) * 100);
-        setElapsedSessionSeconds(Math.floor((Date.now() - sessionStartTime) / 1000));
       }, 1000);
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
@@ -189,7 +186,6 @@ const Pomodoro = () => {
 
   const toggleStartStop = () => {
     if (isActive) {
-      updateTotalWorkSeconds();
       setIsActive(false);
     } else {
       setIsActive(true);
@@ -199,7 +195,6 @@ const Pomodoro = () => {
 
   const resetTimer = () => {
     if (isActive) {
-      updateTotalWorkSeconds();
     }
     setIsActive(false);
     switch (mode) {
@@ -217,32 +212,7 @@ const Pomodoro = () => {
     }
     setSeconds(0);
     setProgress(0);
-    setElapsedSessionSeconds(0);
     setSessionStartTime(null);
-  };
-
-  const updateTotalWorkSeconds = () => {
-    if (mode === 'pomodoro') {
-      setTotalWorkSeconds(prevTotal => prevTotal + elapsedSessionSeconds);
-      const username = localStorage.getItem('username');
-      const todayData = JSON.parse(localStorage.getItem(`${username}_studyTime`)) || {};
-      todayData[currentDate] = (todayData[currentDate] || 0) + elapsedSessionSeconds;
-      localStorage.setItem(`${username}_studyTime`, JSON.stringify(todayData));
-
-      axios.put('http://127.0.0.1:8080/api/updatepomotime', {
-        date: currentDate,
-        seconds: todayData[currentDate],
-        category: selectedCategory,
-        username: username
-      })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error('Error updating pomodoro time:', error);
-        });
-      setElapsedSessionSeconds(0);
-    }
   };
 
   const handleChangeDurations = () => {
