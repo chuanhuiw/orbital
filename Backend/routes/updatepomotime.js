@@ -4,6 +4,8 @@ const { parseISO, isValid, formatISO } = require('date-fns');
 
 router.put('/', async (req, res) => {
     const { date, seconds, category, username } = req.body;
+    console.log('Request body:', req.body);
+
 
     // Validate the request body
     if (!date || !seconds || !category || !username) {
@@ -16,7 +18,7 @@ router.put('/', async (req, res) => {
         return res.status(400).send({ message: 'Invalid date format. Please use ISO 8601 format (YYYY-MM-DD).' });
     }
 
-    // Convert to ISO format string
+    // Convert to ISO format string (YYYY-MM-DD)
     const isoDate = formatISO(parsedDate, { representation: 'date' });
 
     try {
@@ -30,20 +32,28 @@ router.put('/', async (req, res) => {
 
         console.log('Before update:', user.studyTimes);
 
-        // Ensure user.studyTimes is initialized
-        if (!user.studyTimes) {
-            user.studyTimes = [];
-        }
+        // // Ensure user.studyTimes is initialized
+        // if (!user.studyTimes) {
+        //     user.studyTimes = [];
+        // }
 
-        // Find if there is an existing study time entry for the given date and category
-        const existingEntryIndex = user.studyTimes.findIndex(entry => entry.date === isoDate && entry.category === category);
+        // Convert existing entry dates to ISO string for comparison
+        const existingEntry = user.studyTimes.find(entry => {
+            const entryDate = formatISO(new Date(entry.date), { representation: 'date' });
+            console.log(`Comparing stored date: ${entryDate} with incoming date: ${isoDate}`);
+            return entryDate === isoDate && entry.category === category;
+        });
 
-        if (existingEntryIndex !== -1) {
+        console.log('Existing Entry:', existingEntry);
+
+        if (existingEntry) {
             // If an entry exists, update the seconds
-            user.studyTimes[existingEntryIndex].seconds += seconds;
+            existingEntry.seconds += seconds;
+            console.log(`Updated existing entry with date: ${isoDate} and category: ${category}. New seconds: ${existingEntry.seconds}`);
         } else {
-            // If no entry exists, add a new one
+            // If no entry exists, add a new one with the correct seconds
             user.studyTimes.push({ date: isoDate, seconds, category });
+            console.log(`Added new entry with date: ${isoDate} and category: ${category}. Seconds: ${seconds}`);
         }
 
         console.log('After update:', user.studyTimes);
