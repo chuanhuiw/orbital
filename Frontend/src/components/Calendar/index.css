@@ -1,37 +1,34 @@
+/* Calendar Component Styles */
 .calendar {
-    width: 900px;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
+  width: 1000px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto; /* Center the calendar horizontally */
+  background-color: #08043f; /* Add a background color if needed */
+  border: 1px solid #ccc; /* Add a border if needed */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for a better appearance */
 }
 
 .header {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
-.dashboard_btn{
-    height: 40px;
-    width: 160px;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.5s;
-    margin-top: 10px;
-    margin-left: 50px;
-    box-shadow: rgb(181, 180, 180) 0px 6px 0px;
-}
-  
-.dashboard_btn:hover{
-    background-color: #B2BABB;
+.dashboard_btn:hover {
+  background-color: #B2BABB;
 }
 
-.title{
-    margin-left: 450px;
+.title {
+  flex: none;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.current-date{
-    margin-left: 50px;
+.current-date {
+  margin-left: 50px;
 }
 
 .calendar-header {
@@ -39,16 +36,19 @@
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Adjusted to center title and navigation */
+  position: relative;
 }
-  
+
 .calendar-body {
   width: 100%;
   flex-grow: 1;
   display: flex;
-  margin-left: 100px;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-  
+
 .table-header {
   height: 50px;
   width: 100%;
@@ -56,12 +56,12 @@
   align-items: center;
   justify-content: space-around;
 }
-  
+
 .weekday {
   width: 100px;
   text-align: center;
 }
-  
+
 .table-content {
   width: 100%;
   flex-grow: 1;
@@ -70,30 +70,183 @@
   justify-content: center;
   box-sizing: border-box;
   background-color: white;
+  color: #000000;
 }
-  
+
 .calendar-day {
   width: 125px;
-  height: 75px;
+  height: 100px; /* Increased height for better visibility */
   position: relative;
   border: 1px solid #a6a6a6;
 }
-  
+
 .calendar-day:hover {
-  background-color: rgba(0,0,0,.10);
+  background-color: rgba(0, 0, 0, .10);
 }
-  
+
 .calendar-day p {
   position: absolute;
   right: 10px;
   color: #a6a6a6;
 }
-  
+
 .current p {
   color: #000000;
 }
-  
+
 .selected p {
-  color: #2f00ff;
+  color: #eae9ef;
   font-weight: bold;
+  background-color: #1e1350;
+  height: 25px;
+  width: 25px;
+  padding: 4px;
+  border-radius: 10px;
 }
+
+/* Popup Styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(154, 153, 153, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: #3498DB;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-height: 80%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.popup-task {
+  margin-bottom: 20px;
+}
+
+.popup-task h3 {
+  margin: 0;
+}
+
+.popup-task p {
+  margin: 5px 0;
+}
+
+.month-nav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+  position: absolute;
+}
+
+.month-nav .material-icons {
+  font-size: 20px;
+  border: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.month-nav.prev {
+  left: 300px; /* Align left */
+}
+
+.month-nav.next {
+  right: 300px; /* Align right */
+}
+
+.day-nav-prev, .day-nav-next{
+  border:solid;
+  background-color: transparent;
+  color: white;
+  padding: 2px;
+  border-width: 2px;
+  border-radius: 5px;
+}
+
+.today-btn {
+  background: #3498DB;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.logout-btn{
+  background-color: green;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.left-container {
+  display: flex;
+  align-items: center;
+}
+
+.left-container h1 {
+  margin: 0;
+  margin-right: 20px; /* Adjust as needed */
+}
+
+.back-btn {
+  background-color: #f0f0f0; /* Adjust as needed */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-right: 20px; /* Adjust as needed */
+  height: 40px;
+  width: 170px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s;
+  box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+}
+
+.logout-btn {
+  background-color: #f0f0f0; /* Adjust as needed */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  height: 40px;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s;
+  box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+}
+
