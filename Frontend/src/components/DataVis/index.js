@@ -108,19 +108,21 @@ const DataVis = () => {
         return aggregateStudyByCategory(studyData, selectedView);
     };
 
-    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
         const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
+        const category = getCategoryPieData()[index].category;
 
         return (
             <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central">
-                {`${(percent * 100).toFixed(0)}%`}
+                {`${category} ${(percent * 100).toFixed(0)}%`}
             </text>
         );
     };
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
+
 
     return (
         <div className={styles.dataVisContainer}>
