@@ -8,6 +8,7 @@ import ImportantTodo from './components/ImportantTodo';
 import CompletedTodo from './components/CompletedTasks';
 import Calendar from './components/Calendar';
 import DataVis from './components/DataVis';
+import Help from './components/Help';
 
 function App() {
   const user = localStorage.getItem("token")
@@ -22,6 +23,7 @@ function App() {
       <Route path="/completedTodo" exact element={<CompletedTodo/>}/>
       <Route path="/calendar" exact element={<Calendar/>}/>
       <Route path="/dataVis" exact element={<DataVis/>}/>
+      <Route path="/help" exact element={<Help/>}/>
       <Route path="/main" exact element={<Main/>}/>
       <Route path="/" exact element={<Navigate replace to="/login"/>}/>
     </Routes>

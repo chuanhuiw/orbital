@@ -1,0 +1,73 @@
+/* index.css */
+
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .App {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .logo {
+    margin: 0;
+    font-size: 30px;
+    padding: 20px;
+}
+
+.logoutBtn {
+    background-color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: auto;
+	border-radius: 10px;
+	font-weight: bold;
+	transition: 0.5s;
+}
+
+.backButton{
+    height: 30px;
+    width: 160px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.5s;
+    margin-left: 20px;
+    box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+  }
+
+.taglinee{
+    margin-top: 40px;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .video-tile {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 10px;
+  }
+  
+  .video-label {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+  }
+  
