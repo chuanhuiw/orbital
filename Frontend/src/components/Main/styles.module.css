@@ -75,11 +75,13 @@ body {
     font-weight: bold;
     transition: 0.5s;
     font-family: fantasy;
-    border: none;
+    border: solid;
+    border-color: antiquewhite;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-size: 60%;
+    background-color: transparent;
 }
 
 .button1 { background-image: url(./todo.png);}
@@ -93,4 +95,5 @@ body {
     opacity: 70%;
     color: #154360;
     transform: scale(1.05);
+    background-color: antiquewhite;
 }
