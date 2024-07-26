@@ -17,6 +17,8 @@ const addCategory = require("./routes/addCategory");
 const getCategories = require("./routes/getCategories");
 const getCompletedList = require("./routes/getCompletedList");
 const getStudyTimes = require("./routes/getStudyTimes");
+const unlockBadge = require("./routes/unlockBadge");
+const getUser = require("./routes/getUser");
 
 //db connection
 connection();
@@ -47,6 +49,9 @@ app.use("/api/addCategory", addCategory);
 app.use("/api/getCategories", getCategories);
 app.use("/api/getCompletedList", getCompletedList);
 app.use("/api/getStudyTimes", getStudyTimes);
+app.use("/api/unlockBadge", unlockBadge);
+app.use("/api/getUser", getUser);
+
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}...`))

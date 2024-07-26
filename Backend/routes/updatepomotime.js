@@ -3,12 +3,12 @@ const { User } = require('../models/user');
 const { parseISO, isValid, formatISO } = require('date-fns');
 
 router.put('/', async (req, res) => {
-    const { date, seconds, category, username } = req.body;
+    const { date, seconds, category, username, coins } = req.body;
     console.log('Request body:', req.body);
 
 
     // Validate the request body
-    if (!date || !seconds || !category || !username) {
+    if (!date || !seconds || !category || !username || coins === undefined) {
         return res.status(400).send({ message: 'All fields are required: date, seconds, category, username' });
     }
 
@@ -56,12 +56,16 @@ router.put('/', async (req, res) => {
             console.log(`Added new entry with date: ${isoDate} and category: ${category}. Seconds: ${seconds}`);
         }
 
+        // Update the user's coins
+        user.coins = (user.coins || 0) + coins; // Ensure coins field is initialized and add earned coins
+        console.log(`Updated coins for user ${username}. New balance: ${user.coins}`);
+
         console.log('After update:', user.studyTimes);
 
         // Save the updated user object
         await user.save();
 
-        console.log('Study time updated successfully for user:', username);
+        console.log('Study time and coins updated successfully for user:', username);
         res.status(200).send({ message: 'Study time updated successfully' });
     } catch (error) {
         console.error('Error updating study time:', error);

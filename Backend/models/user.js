@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema({
         date: { type: Date },
         seconds: { type: Number },
         category: {type: String},
-    }]
+    }],
+    coins: { type: Number, default: 0 },
+    unlockedBadges: { type: [Number], default: [] }
 });
 
 
