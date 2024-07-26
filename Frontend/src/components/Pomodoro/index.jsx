@@ -50,10 +50,16 @@ const Pomodoro = () => {
   const [categories, setCategories] = useState(["Orbital"]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [newCategory, setNewCategory] = useState('');
-  const[completedPomodoros, setCompletedPomodoros] = useState(0);
+  const [completedPomodoros, setCompletedPomodoros] = useState(0);
 
   useEffect(() => {
     const username = localStorage.getItem('username');
+    if (username) {
+      // Initialize coin balance
+      if (!localStorage.getItem(`${username}_coins`)) {
+        localStorage.setItem(`${username}_coins`, JSON.stringify(0));
+      }
+    }
     const todayData = JSON.parse(localStorage.getItem(`${username}_studyTime`)) || {};
     const savedSeconds = todayData[currentDate] || 0;
 
@@ -75,8 +81,8 @@ const Pomodoro = () => {
     const fetchCategories = async () => {
       const username = localStorage.getItem('username');
       try {
-       //const response = await axios.get(`http://127.0.0.1:8080/api/getCategories/${username}`);
-       const response = await axios.get(`https://focusfish-backend-orbital.onrender.com/api/getCategories/${username}`);
+       const response = await axios.get(`http://127.0.0.1:8080/api/getCategories/${username}`);
+       //const response = await axios.get(`https://focusfish-backend-orbital.onrender.com/api/getCategories/${username}`);
         setCategories(response.data);
         setSelectedCategory(response.data[0] || '');
       } catch (error) {
@@ -129,12 +135,19 @@ const Pomodoro = () => {
         todayData[currentDate] = (todayData[currentDate] || 0) + workSeconds;
         localStorage.setItem(`${username}_studyTime`, JSON.stringify(todayData));
         
-       // axios.put('http://127.0.0.1:8080/api/updatepomotime', {
-        axios.put('https://focusfish-backend-orbital.onrender.com/api/updatepomotime', {
+        const totalMinutes = (newDurations.pomodoro * 60 - (minutes*60 + seconds)) / 60;
+        const coinsEarned = Math.floor(totalMinutes);
+
+        const currentCoins = JSON.parse(localStorage.getItem(`${username}_coins`)) || 0;
+        localStorage.setItem(`${username}_coins`, JSON.stringify(currentCoins + coinsEarned));
+
+        axios.put('http://127.0.0.1:8080/api/updatepomotime', {
+       // axios.put('https://focusfish-backend-orbital.onrender.com/api/updatepomotime', {
           date: currentDate,
           seconds: workSeconds,
           category: selectedCategory,
-          username: username
+          username: username,
+          coins: coinsEarned
         })
           .then(response => {
             console.log(response.data);
@@ -277,8 +290,8 @@ const Pomodoro = () => {
   
       const username = localStorage.getItem('username');
       try {
-        //const response = await axios.post('http://127.0.0.1:8080/api/addCategory', {
-        const response = await axios.post('https://focusfish-backend-orbital.onrender.com/api/addCategory', {
+        const response = await axios.post('http://127.0.0.1:8080/api/addCategory', {
+        //const response = await axios.post('https://focusfish-backend-orbital.onrender.com/api/addCategory', {
           username: username,
           category: newCategory
         });
@@ -295,8 +308,8 @@ const Pomodoro = () => {
     const username = localStorage.getItem('username');
     try {
       
-     // await axios.delete(`http://127.0.0.1:8080/api/deleteCategory/${username}/${encodeURIComponent(categoryToDelete)}`);
-      await axios.delete(`https://focusfish-backend-orbital.onrender.com/api/deleteCategory/${username}/${encodeURIComponent(categoryToDelete)}`);
+     await axios.delete(`http://127.0.0.1:8080/api/deleteCategory/${username}/${encodeURIComponent(categoryToDelete)}`);
+     // await axios.delete(`https://focusfish-backend-orbital.onrender.com/api/deleteCategory/${username}/${encodeURIComponent(categoryToDelete)}`);
       const updatedCategories = categories.filter(category => category !== categoryToDelete);
       setCategories(updatedCategories);
       if (updatedCategories.length > 0) {

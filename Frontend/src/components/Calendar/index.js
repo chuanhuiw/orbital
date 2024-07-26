@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'; // Import react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Import the CSS file
 import './index.css';
 
 // CalendarDays Component
@@ -87,7 +89,7 @@ export default class Calendar extends Component {
         this.weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         this.months = ['January', 'February', 'March', 'April', 'May', 'June', 
                        'July', 'August', 'September', 'October', 'November', 'December'];
-    
+
         this.state = {
             currentDay: new Date(),
             tasks: [],
@@ -98,13 +100,23 @@ export default class Calendar extends Component {
 
     componentDidMount() {
         const userEmail = localStorage.getItem('username');
-        //axios.get('http://127.0.0.1:8080/api/getTodoList', { params: { userEmail } })
-             axios.get('https://focusfish-backend-orbital.onrender.com/api/getTodoList', {params: { userEmail } })
+        axios.get('http://127.0.0.1:8080/api/getTodoList', { params: { userEmail } })
+        // axios.get('https://focusfish-backend-orbital.onrender.com/api/getTodoList', { params: { userEmail } })
             .then(result => {
                 this.setState({ tasks: result.data });
+                this.checkForTodayTasks(result.data);
             })
             .catch(err => console.log(err));
     }
+
+    checkForTodayTasks = (tasks) => {
+        const today = new Date().toDateString();
+        const todayTasks = tasks.filter(task => new Date(task.deadline).toDateString() === today);
+
+        if (todayTasks.length > 0) {
+            toast.info(`You have ${todayTasks.length} task(s) due today!`);
+        }
+    };
 
     handleLogout = () => {
         localStorage.removeItem("token");
@@ -152,62 +164,62 @@ export default class Calendar extends Component {
         const { currentDay, tasks, popupVisible, popupTasks } = this.state;
 
         return (
-          <div>
-          <header>
-          <div class="header-container">
-            <div class="left-container">
-              <h1>FocusFish</h1>
-                <Link to="/main"><button class="back-btn">🏠 Back to Dashboard</button></Link>
-            </div>
-            <button class="logout-btn">Log out</button>
-          </div>
-          </header>
-            <div className="calendar">
-            <div className="calendar-header">
-  <button className="month-nav prev" onClick={this.previousMonth}>
-    <span className="material-icons">prev</span>
-  </button>
-  <div className="title">
-    <h2>{this.months[currentDay.getMonth()]} {currentDay.getFullYear()}</h2>
-  </div>
-  <button className="month-nav next" onClick={this.nextMonth}>
-    <span className="material-icons">next</span>
-  </button>
-  <div className="current-date">
-    <button className="day-nav-prev" onClick={this.previousDay}>
-      <span className="material-icons">prev</span>
-    </button>
-    <p>{this.months[currentDay.getMonth()].substring(0, 3)} {currentDay.getDate()}</p>
-    <button className="day-nav-next" onClick={this.nextDay}>
-      <span className="material-icons">next</span>
-    </button>
-  </div>
-  <button className="today-btn" onClick={this.goToToday}>
-    Today
-  </button>
-</div>
-
-                <div className="calendar-body">
-                    <div className="table-header">
-                        {this.weekdays.map((weekday) => (
-                            <div className="weekday" key={weekday}><p>{weekday}</p></div>
-                        ))}
+            <div>
+                <header>
+                    <div className="header-container">
+                        <div className="left-container">
+                            <h1>FocusFish</h1>
+                            <Link to="/main"><button className="back-btn">🏠 Back to Dashboard</button></Link>
+                        </div>
+                        <button className="logout-btn" onClick={this.handleLogout}>Log out</button>
                     </div>
-                    <CalendarDays 
-                        day={currentDay} 
-                        tasks={tasks} 
-                        openPopup={this.openPopup} 
-                    />
+                </header>
+                <div className="calendar">
+                    <div className="calendar-header">
+                        <button className="month-nav prev" onClick={this.previousMonth}>
+                            <span className="material-icons">prev</span>
+                        </button>
+                        <div className="title">
+                            <h2>{this.months[currentDay.getMonth()]} {currentDay.getFullYear()}</h2>
+                        </div>
+                        <button className="month-nav next" onClick={this.nextMonth}>
+                            <span className="material-icons">next</span>
+                        </button>
+                        <div className="current-date">
+                            <button className="day-nav-prev" onClick={this.previousDay}>
+                                <span className="material-icons">prev</span>
+                            </button>
+                            <p>{this.months[currentDay.getMonth()].substring(0, 3)} {currentDay.getDate()}</p>
+                            <button className="day-nav-next" onClick={this.nextDay}>
+                                <span className="material-icons">next</span>
+                            </button>
+                        </div>
+                        <button className="today-btn" onClick={this.goToToday}>
+                            Today
+                        </button>
+                    </div>
+
+                    <div className="calendar-body">
+                        <div className="table-header">
+                            {this.weekdays.map((weekday) => (
+                                <div className="weekday" key={weekday}><p>{weekday}</p></div>
+                            ))}
+                        </div>
+                        <CalendarDays 
+                            day={currentDay} 
+                            tasks={tasks} 
+                            openPopup={this.openPopup} 
+                        />
+                    </div>
+                    {popupVisible && (
+                        <TaskPopup
+                            tasks={popupTasks}
+                            onClose={this.closePopup}
+                        />
+                    )}
                 </div>
-                {popupVisible && (
-                    <TaskPopup
-                        tasks={popupTasks}
-                        onClose={this.closePopup}
-                    />
-                )}
-            </div>
+                <ToastContainer /> {/* Add ToastContainer */}
             </div>
         );
     }
 }
-

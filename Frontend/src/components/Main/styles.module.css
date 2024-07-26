@@ -78,14 +78,16 @@ body {
     border: none;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60%;
 }
 
-.button1 { background-image: url(./todo1.png); }
-.button2 { background-image: url(./pomo1.png); }
-.button3 { background-image: url(./calendar1.png); }
-.button4 { background-image: url(./stats1.png); }
-.button5 { background-image: url(./fish1.png); }
-.button6 { background-image: url(./help1.png); }
+.button1 { background-image: url(./todo.png);}
+.button2 { background-image: url(./pomodoro.png);}
+.button3 { background-image: url(./calendar.png);}
+.button4 { background-image: url(./stats.png); }
+.button5 { background-image: url(./acheivements.png); }
+.button6 { background-image: url(./help.png); }
 
 .button1:hover, .button2:hover, .button3:hover, .button4:hover, .button5:hover, .button6:hover {
     opacity: 70%;

@@ -1,0 +1,139 @@
+/* Shop Page Styles */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+.logo {
+    margin: 0;
+    font-size: 30px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.logoutButton {
+    border: none;
+    outline: none;
+    height: 30px;
+    background-color: white;
+    border-radius: 10px;
+    width: 120px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 930px;
+    transition: 0.5s;
+    box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+}
+    
+.logoutButton:hover {
+    background-color: #B2BABB;
+}
+
+.shop-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.coin {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #f7f4f4;
+    border-style: solid;
+    border-color: rgb(243, 239, 239);
+    border-radius: 10px;
+    border-width: 2px;
+    width: 150px;
+    margin-left: 20px;
+    height: 40px;
+    padding: 5px;
+    text-align: center;
+}
+
+.badges {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.badge {
+    background: transparent;
+    border-style: solid;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.badge:hover {
+    transform: translateY(-5px);
+}
+
+.badge img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.badge div {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #f7f1f1;
+}
+
+.details{
+    background-color: #022040;
+}
+
+.badge button {
+    background-color: #04376e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.badge button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.badge button:not(:disabled):hover {
+    background-color: #0056b3;
+}
+
+/* Add blur effect for locked badges */
+.badge-image img {
+    transition: filter 0.3s;
+}
+
+.badge-image.locked img {
+    filter: blur(15px);
+}
+
+.badge-image.unlocked img {
+    filter: none;
+}

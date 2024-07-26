@@ -24,7 +24,7 @@ function App() {
         <Link to="/main"><button className='backButton'>🏠 Back to Dashboard</button></Link>
     </header>
     <div className="App">
-      <h1 className='title'>Help</h1>
+      <h1>Help</h1>
       <p className='taglinee'>Click on any video below to see how the features work or clarify any queries</p>
       <div className="video-grid">
         {videos.map((video, index) => (

@@ -204,16 +204,15 @@ button:focus, button:active {
   }
 }
 
-.popupContainer{
+.popupContainer {
   background-color: #5499C7;
   width: 600px;
   font-size: 20px;
-  margin-left: 450px;
-  position:relative;
-  align-items: center;
-  margin-top: 170px;
-  height: 400px;
+  position: relative;
+  height: 415px;
   border-radius: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .popupHeading{
@@ -240,7 +239,7 @@ button:focus, button:active {
 }
 
 .saveButton{
-  height: 50px;
+  height: 30px;
   width: 100px;
   margin-left: 240px;
   margin-top: 30px;
@@ -300,7 +299,7 @@ button:focus, button:active {
 }
 
 .categoryDropdown{
-  margin-top: 550px;
+  margin-top: 600px;
   display: flex;
   justify-content: center;
   align-items: center;

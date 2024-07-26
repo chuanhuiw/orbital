@@ -9,9 +9,6 @@ body {
     padding: 20px;
   }
   
-  h1 {
-    margin-bottom: 20px;
-  }
 
   .logo {
     margin: 0;
@@ -43,8 +40,10 @@ body {
     box-shadow: rgb(181, 180, 180) 0px 6px 0px;
   }
 
+.title{
+    align-items: center;
+}
 .taglinee{
-    margin-top: 40px;
     font-size: 20px;
     margin-bottom: 20px;
 }

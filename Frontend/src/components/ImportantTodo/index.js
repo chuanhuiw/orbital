@@ -13,8 +13,8 @@ function Important() {
     // Fetch flagged tasks from database
     useEffect(() => {
         const userEmail = localStorage.getItem('username');
-        //axios.get('http://127.0.0.1:8080/api/getImportantList', { params: { userEmail } })
-        axios.get('https://focusfish-backend-orbital.onrender.com/api/getImportantList', { params: { userEmail} })
+        axios.get('http://127.0.0.1:8080/api/getImportantList', { params: { userEmail } })
+        //axios.get('https://focusfish-backend-orbital.onrender.com/api/getImportantList', { params: { userEmail} })
             .then(result => {
                 setImportantList(result.data);
                 setFilteredToDoList(result.data);
