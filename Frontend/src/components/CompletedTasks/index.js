@@ -180,6 +180,17 @@ function Completed() {
             .catch(err => console.log(err));
     };
 
+    const deleteAllDoneTasks = () => {
+        const userEmail = localStorage.getItem('username');
+        axios.post('http://127.0.0.1:8080/api/deleteAllDoneTasks', { userEmail })
+        //axios.post('https://focusfish-backend-orbital.onrender.com/api/deleteAllDoneTasks', { userEmail })
+            .then(result => {
+                console.log(result);
+                window.location.reload();
+            })
+            .catch(err => console.log(err));
+    };
+
     const toggleFlagged = (id, currentFlagged) => {
         const updatedFlagged = !currentFlagged;
         axios.post(`http://127.0.0.1:8080/api/toggleFlaggedTodo/${id}`, { flagged: updatedFlagged })
@@ -312,6 +323,9 @@ function Completed() {
                             ))}
                         </tbody>
                     </table>
+                    <button onClick={deleteAllDoneTasks} className="delete_all_btn">
+                            Clear All Completed Tasks Permanently
+                    </button>
                     </center>
                 </div>
             </div>

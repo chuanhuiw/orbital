@@ -46,3 +46,19 @@
     margin: 0 auto; /* Center the table */
 }
 
+.delete_all_btn{
+    margin-top: 20px;
+    width: 270px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(139, 3, 3);
+    cursor: pointer;
+    color: whitesmoke;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+.delete_all_btn:hover{
+    background-color: rgb(75, 2, 2);
+}
