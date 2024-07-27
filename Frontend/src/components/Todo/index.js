@@ -320,7 +320,7 @@ function Todo() {
                         return { ...task, status: 'done' };
                     }
                     return task;
-                });
+                }).filter(task => task.status !== 'done');
                 setTodoList(updatedTodoList);
                 setFilteredToDoList(updatedTodoList);
             })
