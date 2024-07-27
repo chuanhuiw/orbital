@@ -47,8 +47,8 @@ const Pomodoro = () => {
   const [totalWorkSeconds, setTotalWorkSeconds] = useState(0);
   const [sessionStartTime, setSessionStartTime] = useState(null);
   const [currentDate, setCurrentDate] = useState(formatCurrentDate());
-  const [categories, setCategories] = useState(["Orbital"]);
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [categories, setCategories] = useState(["Miscellaneous"]);
+  const [selectedCategory, setSelectedCategory] = useState("Miscellaneous");
   const [newCategory, setNewCategory] = useState('');
   const [completedPomodoros, setCompletedPomodoros] = useState(0);
 
@@ -83,10 +83,18 @@ const Pomodoro = () => {
       try {
        const response = await axios.get(`http://127.0.0.1:8080/api/getCategories/${username}`);
        //const response = await axios.get(`https://focusfish-backend-orbital.onrender.com/api/getCategories/${username}`);
+
+       if (response.data.length === 0) {
+        setCategories(["Miscellaneous"]);
+        setSelectedCategory("Miscellaneous");
+       } else {
         setCategories(response.data);
-        setSelectedCategory(response.data[0] || '');
+        setSelectedCategory(response.data[0] || "Miscellaneous");
+       }
       } catch (error) {
         console.error('Error fetching categories:', error);
+        setCategories(["Miscellaneous"]);
+        setSelectedCategory("Miscellaneous");
       }
     };
     fetchCategories();
@@ -304,19 +312,23 @@ const Pomodoro = () => {
     }
   };
 
-  const handleDeleteCategory = async (categoryToDelete) => {
+  const handleDeleteCategory = async (category) => {
+    if (category === "Miscellaneous") {
+      alert("The 'Miscellaneous' category cannot be deleted.");
+      return;
+    }
+
     const username = localStorage.getItem('username');
+    const updatedCategories = categories.filter((cat) => cat !== category);
+    setCategories(updatedCategories);
+
+    if (selectedCategory === category) {
+      setSelectedCategory(updatedCategories[0] || 'Miscellaneous');
+    }
+
     try {
-      
-     await axios.delete(`http://127.0.0.1:8080/api/deleteCategory/${username}/${encodeURIComponent(categoryToDelete)}`);
-     // await axios.delete(`https://focusfish-backend-orbital.onrender.com/api/deleteCategory/${username}/${encodeURIComponent(categoryToDelete)}`);
-      const updatedCategories = categories.filter(category => category !== categoryToDelete);
-      setCategories(updatedCategories);
-      if (updatedCategories.length > 0) {
-        setSelectedCategory(updatedCategories[0]);
-      } else {
-        setSelectedCategory('');
-      }
+      await axios.delete(`http://127.0.0.1:8080/api/deleteCategory/${username}/${category}`);
+      //await axios.delete(`https://focusfish-backend-orbital.onrender.com/api/deleteCategory/${username}/${category}`);
     } catch (error) {
       console.error('Error deleting category:', error);
     }
@@ -366,29 +378,18 @@ const Pomodoro = () => {
             Long break
           </button>
         </div>
-        <div className={styles.clock} id="js-clock">
-          <span id="js-minutes">{String(minutes).padStart(2, '0')}</span>
-          <span className={styles.separator}>:</span>
-          <span id="js-seconds">{String(seconds).padStart(2, '0')}</span>
-        </div>
-        <div className={styles.buttonGroup}>
-          <div>
-            <button className={styles.editButton} data-action="edit" onClick={handleChangeDurations}>
-              Edit
-            </button>
+          <div className={styles.clock} id="js-clock">
+            <span id="js-minutes">{String(minutes).padStart(2, '0')}</span>
+            <span className={styles.separator}>:</span>
+            <span id="js-seconds">{String(seconds).padStart(2, '0')}</span>
           </div>
-          <button className={styles.mainButton} data-action="start" id="js-btn" onClick={toggleStartStop}>
-            {isActive ? 'Stop' : 'Start'}
-          </button>
-          <button className={styles.resetButton} data-action="reset" onClick={resetTimer}>
-            Reset
-          </button>
-        </div>
+        
       </div>
+      <center>
       {showPopup && (
         <div className={styles.popupContainer}>
+          <button className={styles.closeButton} onClick={handleClosePopup}>X</button>
           <div className={styles.popup}>
-            <button className={styles.closeButton} onClick={handleClosePopup}>X</button>
             <h1 className={styles.popupHeading}>Edit Durations</h1>
 
             <h3 className={styles.popupHeading}>Pomodoro Duration (minutes):</h3>
@@ -411,7 +412,20 @@ const Pomodoro = () => {
           </div>
         </div>
       )}
-      <div className={styles.categoryDropdown} placeholder="No category selected">
+      <div className={styles.actionButtons}>
+          <div>
+            <button className={styles.editButton} data-action="edit" onClick={handleChangeDurations}>
+              Edit
+            </button>
+          </div>
+          <button className={styles.mainButton} data-action="start" id="js-btn" onClick={toggleStartStop}>
+            {isActive ? 'Stop' : 'Start'}
+          </button>
+          <button className={styles.resetButton} data-action="reset" onClick={resetTimer}>
+            Reset
+          </button>
+        </div>
+        <div className={styles.categoryDropdown} placeholder="No category selected">
         <select className={styles.categorySelect} value={selectedCategory} onChange={handleCategoryChange}>
           {categories.map(category => (
             <option key={category} value={category}>
@@ -433,7 +447,9 @@ const Pomodoro = () => {
         <p>{currentDate}</p>
         <p>Today's total Pomodoro time: {displayStudyTime()}</p>
       </div>
-    </main>
+
+      </center>
+          </main>
   );
 };
 

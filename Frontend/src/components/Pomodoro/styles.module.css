@@ -29,28 +29,28 @@ body {
   color: whitesmoke;
 }
 
-/* Progress Bar Styling */
+
 progress {
-  border-radius: 2px;
   width: 100%;
   height: 12px;
-  position: fixed;
-  top: 0;
-  margin-top: 480px;
+  border-radius: 2px;
+  margin-top: 350px;
 }
 
 progress::-webkit-progress-bar {
   background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
 }
 
 progress::-webkit-progress-value {
   background-color: #fff;
+  border-radius: 2px;
 }
 
 /* Timer Container */
 .timer {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 10px;
@@ -191,12 +191,10 @@ button:focus, button:active {
   outline: none;
 }
 
-/* Hidden Element */
 .hidden {
   display: none;
 }
 
-/* Responsive Clock Font Size */
 @media screen and (max-width: 550px) {
   .clock {
     font-size: 8rem;
@@ -206,14 +204,21 @@ button:focus, button:active {
 
 .popupContainer {
   background-color: #5499C7;
-  width: 600px;
+  width: 450px;
   font-size: 20px;
-  position: relative;
-  height: 415px;
+  height: 430px;
   border-radius: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Ensure it appears on top */
+  display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds shadow effect */
 }
+
 
 .popupHeading{
   text-align: center;
@@ -227,7 +232,6 @@ button:focus, button:active {
 
 .inputs{
   align-items: center;
-  margin-left: 150px;
   height: 30px;
   width: 300px;
   border-radius: 10px;
@@ -241,7 +245,6 @@ button:focus, button:active {
 .saveButton{
   height: 30px;
   width: 100px;
-  margin-left: 240px;
   margin-top: 30px;
   border: none;
   border-radius: 10px;
@@ -257,14 +260,16 @@ button:focus, button:active {
 }
 
 .closeButton{
-  margin-left: 570px;
   width: 30px;
-  height: 35px;
+  height: 29px;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
   border: none;
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
 
 .closeButton:hover{
@@ -290,7 +295,6 @@ button:focus, button:active {
 }
 
 .dailySummary{
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -299,7 +303,7 @@ button:focus, button:active {
 }
 
 .categoryDropdown{
-  margin-top: 600px;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -341,4 +345,8 @@ button:focus, button:active {
 
 .deleteButton{
   background-color: #F1948A;
+}
+
+.actionButtons{
+  margin-top: 65px;
 }
