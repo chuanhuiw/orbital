@@ -31,7 +31,7 @@ const Main = () => {
                 <Link to="/Pomodoro"><button className={styles.button2}>Pomodoro</button></Link>
                 <Link to="/Calendar"><button className={styles.button3}>Calendar</button></Link>
                 <Link to="/DataVis"><button className={styles.button4}>My Stats</button></Link>
-                <Link to="/Shop"> <button className={styles.button5}>Aquarium</button> </Link>
+                <Link to="/Shop"> <button className={styles.button5}>Acheivements</button> </Link>
                 <Link to="/Help"><button className={styles.button6}>Help</button></Link>
             </div>
         </div>

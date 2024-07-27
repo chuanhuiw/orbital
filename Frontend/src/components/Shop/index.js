@@ -18,14 +18,14 @@ const badges = [
   { id: 10, price: 100, image: 'b10.png', label: 'Badge 10' },
   { id: 11, price: 110, image: 'b11.png', label: 'Badge 11' },
   { id: 12, price: 120, image: 'b12.png', label: 'Badge 12' },
-  { id: 10, price: 100, image: 'b13.png', label: 'Badge 10' },
-  { id: 11, price: 110, image: 'b14.png', label: 'Badge 11' },
-  { id: 12, price: 120, image: 'b15.png', label: 'Badge 12' },
-  { id: 10, price: 100, image: 'b16.png', label: 'Badge 10' },
-  { id: 11, price: 110, image: 'b17.png', label: 'Badge 11' },
-  { id: 12, price: 120, image: 'b18.png', label: 'Badge 12' },
-  { id: 12, price: 120, image: 'b19.png', label: 'Badge 12' },
-  { id: 12, price: 120, image: 'b20.png', label: 'Badge 12' },
+  { id: 13, price: 130, image: 'b13.png', label: 'Badge 13' },
+  { id: 14, price: 140, image: 'b14.png', label: 'Badge 14' },
+  { id: 15, price: 150, image: 'b15.png', label: 'Badge 15' },
+  { id: 16, price: 160, image: 'b16.png', label: 'Badge 16' },
+  { id: 17, price: 170, image: 'b17.png', label: 'Badge 17' },
+  { id: 18, price: 180, image: 'b18.png', label: 'Badge 18' },
+  { id: 19, price: 190, image: 'b19.png', label: 'Badge 19' },
+  { id: 20, price: 200, image: 'b20.png', label: 'Badge 20' },
 ];
 
 const Shop = () => {
@@ -68,16 +68,15 @@ const Shop = () => {
       setError('User email not found in local storage');
       return;
     }
-
-    // Check if previous badges are unlocked
-    const previousBadges = badges.filter(badge => badge.id < badgeId);
-    const canUnlock = previousBadges.every(badge => user.unlockedBadges.includes(badge.id));
-
+  
+    const previousBadgeId = badgeId - 1;
+    const canUnlock = previousBadgeId === 0 || user.unlockedBadges.includes(previousBadgeId);
+  
     if (!canUnlock) {
-      toast.error('Unlock previous badges before unlocking this one');
+      toast.error('Unlock the previous badge before unlocking this one');
       return;
     }
-
+  
     if (user.coins >= badgePrice) {
       try {
         const response = await axios.post('http://127.0.0.1:8080/api/unlockBadge', {
@@ -93,6 +92,7 @@ const Shop = () => {
       toast.error('Not enough coins');
     }
   };
+  
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -113,33 +113,34 @@ const Shop = () => {
       <div className="badges">
         {badges.map((badge) => {
           const isUnlocked = user.unlockedBadges.includes(badge.id);
-          const canUnlock = user.unlockedBadges.includes(badge.id - 1);
+          const previousBadgeId = badge.id - 1;
+          const canUnlock = previousBadgeId === 0 || user.unlockedBadges.includes(previousBadgeId);
           const buttonClass = !canUnlock ? 'disabled' : '';
-          
+
           return (
-            <div className='details'>
-            <div key={badge.id} className="badge">
-              <div className={`badge-image ${isUnlocked ? 'unlocked' : 'locked'}`}>
-                <img src={badge.image} alt={badge.label} />
+            <div key={badge.id} className='details'>
+              <div className="badge">
+                <div className={`badge-image ${isUnlocked ? 'unlocked' : 'locked'}`}>
+                  <img src={badge.image} alt={badge.label} />
+                </div>
+                <div>{badge.label}</div>
+                <div>Price: {badge.price}</div>
+                <button
+                  className={buttonClass}
+                  disabled={isUnlocked || !canUnlock}
+                  onClick={() => {
+                    if (!canUnlock) {
+                      toast.error('Unlock the previous badge before unlocking this one');
+                    } else if (user.coins < badge.price) {
+                      toast.error('Not enough coins');
+                    } else {
+                      handleUnlock(badge.id, badge.price);
+                    }
+                  }}
+                >
+                  {isUnlocked ? 'Unlocked' : 'Unlock'}
+                </button>
               </div>
-              <div>{badge.label}</div>
-              <div>Price: {badge.price}</div>
-              <button
-                className={buttonClass}
-                disabled={isUnlocked || !canUnlock}
-                onClick={() => {
-                  if (!canUnlock) {
-                    toast.error('Unlock previous badges before unlocking this one');
-                  } else if (user.coins < badge.price) {
-                    toast.error('Not enough coins');
-                  } else {
-                    handleUnlock(badge.id, badge.price);
-                  }
-                }}
-              >
-                {isUnlocked ? 'Unlocked' : 'Unlock'}
-              </button>
-            </div>
             </div>
           );
         })}
