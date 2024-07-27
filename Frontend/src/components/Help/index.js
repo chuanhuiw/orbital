@@ -13,7 +13,7 @@ function App() {
   const videos = [
     { src: 'Calendar_walkthrough_CC.mp4', label: 'Calendar Walkthrough' },
     { src: 'Datavis_walkthrough_CC.mp4', label: 'Data Visualization Walkthrough' },
-    { src: 'Pomodoro_walkthroug_CC.mp4', label: 'Pomodoro Walkthrough' },
+    { src: 'Pomodoro_walkthrough_CC.mp4', label: 'Pomodoro Walkthrough' },
     { src: 'ToDo_walkthrough_CC.mp4', label: 'To-Do Walkthrough' },
   ];
 
