@@ -1,15 +1,21 @@
-const router = require("express").Router();
-const { User } = require("../models/user");
+const router = require('express').Router();
+const { User } = require('../models/user');
 
-router.get("/:email", async (req, res) => {
-    try {
-        const user = await User.findOne({ email: req.params.email });
-        if (!user) return res.status(404).send({ message: "User not found" });
+router.get('/:username', async (req, res) => {
+  const { username } = req.params;
 
-        res.status(200).send(user);
-    } catch (error) {
-        res.status(500).send({ message: "Internal Server Error" });
+  try {
+    const user = await User.findOne({ email: username });
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
     }
+
+    res.status(200).send(user);
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).send({ message: 'Internal server error' });
+  }
 });
 
 module.exports = router;

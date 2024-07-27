@@ -19,6 +19,7 @@ const getCompletedList = require("./routes/getCompletedList");
 const getStudyTimes = require("./routes/getStudyTimes");
 const unlockBadge = require("./routes/unlockBadge");
 const getUser = require("./routes/getUser");
+const deleteAllDoneTasks = require("./routes/deleteDoneTasks");
 
 //db connection
 connection();
@@ -51,6 +52,7 @@ app.use("/api/getCompletedList", getCompletedList);
 app.use("/api/getStudyTimes", getStudyTimes);
 app.use("/api/unlockBadge", unlockBadge);
 app.use("/api/getUser", getUser);
+app.use("/api/deleteAllDoneTasks", deleteAllDoneTasks);
 
 
 const port = process.env.PORT || 8080;
