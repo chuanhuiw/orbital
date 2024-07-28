@@ -46,8 +46,14 @@ const Signup = () => {
     return (
         <div>
         <header>
-            <h1>FocusFish <Link to="/login"><button className={styles.header_button}>Log in</button></Link></h1>
-        </header>
+                    <div className={styles.header_container}>
+                        <div className={styles.left_container}>
+                            <h1>FocusFish</h1>
+                            
+                        </div>
+                        <Link to="/login"><button className={styles.login_button}>Log in</button></Link>
+                    </div>
+                </header>
             <div className = {styles.signup_container}>
             <div className = {styles.signup_from_container}>
                 

@@ -3,27 +3,12 @@ body{
 	opacity: 90%;
 }
 
-header{
-	color: whitesmoke;
-	margin-left: 10px;
-}
-
-.ocean_facts{
-	margin-top: 10px;
-	border-left-style: solid;
-	border-right-style: solid;
-	border-width: 5px;
-	width: 600px;
-	padding: 50px;
-	font-size: 30px;
-	margin-left: 400px;
-	opacity: 30%;
-	transition: 0.5s;
-	text-align: center;
-}
-
-.ocean_facts:hover{
-	opacity:65%;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: whitesmoke;
 }
 
 .signup_container {
@@ -32,6 +17,7 @@ header{
 	background-color: #B0C4DE;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
 .signup_form_container {
@@ -41,7 +27,6 @@ header{
 	border-radius: 10px;
 	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
 		0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
-	margin-left: 100px ;
 	}
 
 .right {
@@ -52,7 +37,6 @@ header{
 	justify-content: center;
 	background-color: transparent;
 	border-radius: 10px;
-	margin-left: 500px;
 	width: 500px;
 	border-color: black;
 	border-style: solid; 
@@ -106,7 +90,6 @@ input:hover{
 	justify-content: center;
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
-	margin-left: 500px;
 }
 
 .left h1 {
@@ -148,7 +131,6 @@ input:hover{
 }
 
 .header_button{
-margin-left: 1150px;
 margin-bottom: 10px;
 width: 100px;
 height: 35px;
@@ -163,3 +145,36 @@ transition: 0.5s;
 .header_button:hover{
 	background-color: #B2BABB;
 }
+
+.header_container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	height: 70px;
+  }
+  
+  .left_container {
+	display: flex;
+	align-items: center;
+  }
+  
+  .left_container h1 {
+	margin: 0;
+	margin-right: 20px; /* Adjust as needed */
+  }
+
+  .login_button {
+	background-color: #f0f0f0; /* Adjust as needed */
+	border: none;
+	padding: 10px;
+	cursor: pointer;
+	height: 40px;
+	width: 100px;
+	border: none;
+	border-radius: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: rgb(181, 180, 180) 0px 6px 0px;
+  }

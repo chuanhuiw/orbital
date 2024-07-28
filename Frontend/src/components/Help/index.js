@@ -20,9 +20,14 @@ function App() {
   return (
     <div>
     <header>
-        <h1 className="logo">FocusFish  <button className="logout_btn" onClick={handleLogout}>Log out</button> </h1>
-        <Link to="/main"><button className='backButton'>🏠 Back to Dashboard</button></Link>
-    </header>
+                    <div className="header-container">
+                        <div className="left-container">
+                            <h1>FocusFish</h1>
+                            <Link to="/main"><button className="back-btn">🏠 Back to Dashboard</button></Link>
+                        </div>
+                        <button className="logout-btn" onClick={handleLogout}>Log out</button>
+                    </div>
+                </header>
     <div className="App">
       <h1>Help</h1>
       <p className='taglinee'>Click on any video below to see how the features work or clarify any queries</p>

@@ -53,8 +53,14 @@ const Login = () => {
     return (
         <div>
             <header>
-                <h1>FocusFish <Link to="/login"><button className={styles.header_button}>Log in</button></Link></h1>
-            </header>
+                    <div className={styles.header_container}>
+                        <div className={styles.left_container}>
+                            <h1>FocusFish</h1>
+                            
+                        </div>
+                        <Link to="/login"><button className={styles.login_button}>Log in</button></Link>
+                    </div>
+                </header>
             <div className={styles.login_container}>
                 <div className={styles.login_from_container}>
                     <div className={styles.left}>
@@ -80,10 +86,6 @@ const Login = () => {
                             />
                             {error && <div className={styles.error_msg}>{error}</div>}
                             <button type="submit" className={styles.green_btn}>Login!</button>
-                            {/* <p>OR</p>
-                            <button className={styles.google_btn} onClick={handleGoogleSignup}>
-                                Sign up with Google
-                            </button> */}
                         </form>
                     </div>
                     <div className={styles.right}>

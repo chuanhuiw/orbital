@@ -109,6 +109,8 @@ const DraggableTask = ({ task, index, moveTask, editableId, setEditableId, edite
 };
 
 function Completed() {
+    
+
     const [completedList, setCompletedList] = useState([]);
     const [editableId, setEditableId] = useState(null);
     const [editedTask, setEditedTask] = useState("");
@@ -224,7 +226,23 @@ function Completed() {
         setCollapsed(!collapsed);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        window.location.href = "/login";
+    };
+
     return (
+        <div>
+        <header>
+                    <div className="header-container">
+                        <div className="left-container">
+                            <h1>FocusFish</h1>
+                            <Link to="/main"><button className="back-btn">🏠 Back to Dashboard</button></Link>
+                        </div>
+                        <button className="logout-btn" onClick={handleLogout}>Log out</button>
+                    </div>
+                </header>
         <DndProvider backend={HTML5Backend}>
             <div className="container">
                 <div className={`sidebar ${collapsed ? 'collapsed' : 'expanded'}`}>
@@ -330,6 +348,7 @@ function Completed() {
                 </div>
             </div>
         </DndProvider>
+        </div>
     );
 }
 

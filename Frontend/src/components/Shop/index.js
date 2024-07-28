@@ -99,15 +99,15 @@ const Shop = () => {
 
   return (
     <div>
-      <header className='header'>
-        <h1 className="logo">
-          FocusFish 
-          <Link to="/main">
-            <button className="backButton">🏠 Back to Dashboard</button>
-          </Link> 
-          <button className="logoutButton" onClick={handleLogout}>Log out</button>
-        </h1>
-      </header>
+      <header>
+                    <div className="header-container">
+                        <div className="left-container">
+                            <h1>FocusFish</h1>
+                            <Link to="/main"><button className="back-btn">🏠 Back to Dashboard</button></Link>
+                        </div>
+                        <button className="logout-btn" onClick={handleLogout}>Log out</button>
+                    </div>
+                </header>
       <h1>Shop</h1>
       <div className='coin'>Coins 🪙 {user.coins}</div>
       <div className="badges">

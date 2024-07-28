@@ -366,9 +366,13 @@ const Pomodoro = () => {
   return (
     <main className={styles.app}>
       <header>
-        <h1 className={styles.logo}>
-          FocusFish <Link to="/main"><button className={styles.backButton}>🏠 Back to Dashboard</button></Link> <button className={styles.logout_btn} onClick={handleLogout}>Log out</button>
-        </h1>
+                    <div className="header-container">
+                        <div className="left-container">
+                            <h1>FocusFish</h1>
+                            <Link to="/main"><button className="back-btn">🏠 Back to Dashboard</button></Link>
+                        </div>
+                        <button className="logout-btn" onClick={handleLogout}>Log out</button>
+                    </div>
       </header>
       {showMessage && (
         <div className={styles.congratsMessage}>

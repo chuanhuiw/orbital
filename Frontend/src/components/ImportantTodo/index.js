@@ -4,6 +4,14 @@ import { Link } from 'react-router-dom';
 import './index.css';
 
 function Important() {
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        window.location.reload();
+        window.location.href = "/login";
+    };
+
+
     const [importantList, setImportantList] = useState([]);
     const [collapsed, setCollapsed] = useState(true); // State for sidebar collapse
     const [filteredTodoList, setFilteredToDoList] = useState([]);
@@ -75,6 +83,16 @@ function Important() {
     };
 
     return (
+        <div>
+        <header>
+                    <div className="header-container">
+                        <div className="left-container">
+                            <h1>FocusFish</h1>
+                            <Link to="/main"><button className="back-btn">🏠 Back to Dashboard</button></Link>
+                        </div>
+                        <button className="logout-btn" onClick={handleLogout}>Log out</button>
+                    </div>
+                </header>
         <div className="container">
             <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
                 <button className="toggle-btn" onClick={toggleSidebar}>
@@ -179,6 +197,7 @@ function Important() {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 }
