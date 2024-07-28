@@ -5,6 +5,9 @@ body {
 .app {
     text-align: center;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .header {
@@ -55,9 +58,10 @@ body {
 
 .mainContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(400px,0fr));
+    gap: 60px;
     padding: 20px;
+    justify-content: center;
 }
 
 .mainContainer a {
@@ -67,7 +71,6 @@ body {
 .button1, .button2, .button3, .button4, .button5, .button6 {
     width: 400px;
     height: 250px;
-    padding: 20px;
     border-radius: 35px;
     cursor: pointer;
     color: transparent;
@@ -94,6 +97,6 @@ body {
 .button1:hover, .button2:hover, .button3:hover, .button4:hover, .button5:hover, .button6:hover {
     opacity: 70%;
     color: #154360;
-    transform: scale(1.05);
+    transform: scale(1.1);
     background-color: antiquewhite;
 }

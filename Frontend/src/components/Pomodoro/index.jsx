@@ -393,13 +393,14 @@ const Pomodoro = () => {
         </div>
       )}
       <center>
-<div className={styles.checkbox_container}>
+      <div className={styles.checkbox_container}>
           <input
             type="checkbox"
             checked={autostartBreaks}
             onChange={toggleAutostartBreaks}
+            className={styles.checkbox}
           />
-          <span className={styles.checkbox_label}>Autostart Breaks and Pomodoro</span>
+          <span className={styles.checkbox_label}>Autostart Breaks & Pomodoro</span>
       </div>
       </center>
       <progress id="js-progress" value={progress} max="100"></progress>
