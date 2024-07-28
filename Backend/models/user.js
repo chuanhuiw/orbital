@@ -15,7 +15,13 @@ const userSchema = new mongoose.Schema({
         category: {type: String},
     }],
     coins: { type: Number, default: 0 },
-    unlockedBadges: { type: [Number], default: [] }
+    unlockedBadges: { type: [Number], default: [] },
+    durations: {
+        pomodoro: { type: Number, default: 25 },
+        shortBreak: { type: Number, default: 5 },
+        longBreak: { type: Number, default: 15 },
+        cyclesBeforeLongBreak: { type: Number, default: 3 }
+    }
 });
 
 

@@ -270,10 +270,38 @@ const Pomodoro = () => {
     });
   };
 
-  const handleSaveDurations = () => {
-    handleModeChange(mode);
-    setShowPopup(false);
+  const handleSaveDurations = async () => {
+    const username = localStorage.getItem('username');
+    try {
+      await axios.post('http://127.0.0.1:8080/api/saveDurations', {
+        username: username,
+        durations: newDurations
+      });
+      handleModeChange(mode);
+      setShowPopup(false);
+    } catch (error) {
+      console.error('Error savinf durations:', error);
+    }
   };
+
+  useEffect(() => {
+    const fetchDurations = async () => {
+      const username = localStorage.getItem('username');
+      if (!username){
+        return;
+      }
+      try {
+        const response = await axios.get(`http://127.0.0.1:8080/api/getDurations/${username}`);
+        if (response.data) {
+          setNewDurations(response.data.durations);
+          setMinutes(response.data.durations[mode]);
+        }
+      } catch (error) {
+        console.error('Error fetching durations:', error);
+      }
+    };
+    fetchDurations();
+  }, [mode]);
 
   const displayStudyTime = () => {
     const hours = Math.floor(totalWorkSeconds / 3600);
