@@ -52,7 +52,8 @@ const Shop = () => {
 
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8080/api/getUser/${email}`);
+        //const response = await axios.get(`http://127.0.0.1:8080/api/getUser/${email}`);
+        const response = await axios.get(`https://focusfish-backend-orbital.onrender.com/api/getUser/${email}`);
         setUser(response.data);
       } catch (err) {
         setError('Failed to fetch user data');
@@ -81,7 +82,8 @@ const Shop = () => {
   
     if (user.coins >= badgePrice) {
       try {
-        const response = await axios.post('http://127.0.0.1:8080/api/unlockBadge', {
+       // const response = await axios.post('http://127.0.0.1:8080/api/unlockBadge', {
+          const response = await axios.post('https://focusfish-backend-orbital.onrender.com/api/unlockBadge', {
           username: email,
           badgeId,
           badgePrice

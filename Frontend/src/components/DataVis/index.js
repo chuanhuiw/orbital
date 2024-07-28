@@ -32,8 +32,8 @@ const DataVis = () => {
         const fetchStudyData = async () => {
             const username = localStorage.getItem('username');
             try {
-               const response = await axios.get(`http://127.0.0.1:8080/api/getStudyTimes/${username}`);
-               // const response = await axios.get(`https://focusfish-backend-orbital.onrender.com/api/getStudyTimes/${username}`);
+               //const response = await axios.get(`http://127.0.0.1:8080/api/getStudyTimes/${username}`);
+                const response = await axios.get(`https://focusfish-backend-orbital.onrender.com/api/getStudyTimes/${username}`);
                 const studyTimes = response.data;
 
                 const formattedData = studyTimes.map(entry => ({

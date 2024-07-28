@@ -122,8 +122,8 @@ function Completed() {
     // Fetch completed tasks from database
     useEffect(() => {
         const userEmail = localStorage.getItem('username');
-        axios.get('http://127.0.0.1:8080/api/getCompletedList', { params: { userEmail } })
-        // axios.get('https://focusfish-backend-orbital.onrender.com/api/getCompletedList', { params: { userEmail } })
+        //axios.get('http://127.0.0.1:8080/api/getCompletedList', { params: { userEmail } })
+         axios.get('https://focusfish-backend-orbital.onrender.com/api/getCompletedList', { params: { userEmail } })
             .then(result => {
                 setCompletedList(result.data);
             })
@@ -159,8 +159,8 @@ function Completed() {
             return;
         }
 
-        axios.post('http://127.0.0.1:8080/api/updateTodoList/' + id, editedData)
-        //axios.post('https://focusfish-backend-orbital.onrender.com/api/updateTodoList/' + id, editedData)
+        //axios.post('http://127.0.0.1:8080/api/updateTodoList/' + id, editedData)
+        axios.post('https://focusfish-backend-orbital.onrender.com/api/updateTodoList/' + id, editedData)
             .then(result => {
                 console.log(result);
                 setEditableId(null);
@@ -173,8 +173,8 @@ function Completed() {
     };
 
     const deleteTask = (id) => {
-        axios.delete('http://127.0.0.1:8080/api/deleteTodoList/' + id)
-       //  axios.delete('https://focusfish-backend-orbital.onrender.com/api/deleteTodoList/' + id)
+       // axios.delete('http://127.0.0.1:8080/api/deleteTodoList/' + id)
+         axios.delete('https://focusfish-backend-orbital.onrender.com/api/deleteTodoList/' + id)
             .then(result => {
                 console.log(result);
                 window.location.reload();
@@ -184,8 +184,8 @@ function Completed() {
 
     const deleteAllDoneTasks = () => {
         const userEmail = localStorage.getItem('username');
-        axios.post('http://127.0.0.1:8080/api/deleteAllDoneTasks', { userEmail })
-        //axios.post('https://focusfish-backend-orbital.onrender.com/api/deleteAllDoneTasks', { userEmail })
+        //axios.post('http://127.0.0.1:8080/api/deleteAllDoneTasks', { userEmail })
+        axios.post('https://focusfish-backend-orbital.onrender.com/api/deleteAllDoneTasks', { userEmail })
             .then(result => {
                 console.log(result);
                 window.location.reload();
@@ -195,8 +195,8 @@ function Completed() {
 
     const toggleFlagged = (id, currentFlagged) => {
         const updatedFlagged = !currentFlagged;
-        axios.post(`http://127.0.0.1:8080/api/toggleFlaggedTodo/${id}`, { flagged: updatedFlagged })
-       // axios.post(`https://focusfish-backend-orbital.onrender.com/api/toggleFlaggedTodo/${id}`, { flagged: updatedFlagged })
+        //axios.post(`http://127.0.0.1:8080/api/toggleFlaggedTodo/${id}`, { flagged: updatedFlagged })
+       axios.post(`https://focusfish-backend-orbital.onrender.com/api/toggleFlaggedTodo/${id}`, { flagged: updatedFlagged })
             .then(result => {
                 console.log(result.data); // Log the response from the server
                 const updatedCompletedList = completedList.map(item => {

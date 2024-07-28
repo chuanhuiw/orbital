@@ -82,8 +82,8 @@ const Pomodoro = () => {
     const fetchCategories = async () => {
       const username = localStorage.getItem('username');
       try {
-       const response = await axios.get(`http://127.0.0.1:8080/api/getCategories/${username}`);
-       //const response = await axios.get(`https://focusfish-backend-orbital.onrender.com/api/getCategories/${username}`);
+       //const response = await axios.get(`http://127.0.0.1:8080/api/getCategories/${username}`);
+       const response = await axios.get(`https://focusfish-backend-orbital.onrender.com/api/getCategories/${username}`);
 
        if (response.data.length === 0) {
         setCategories(["Miscellaneous"]);
@@ -149,8 +149,8 @@ const Pomodoro = () => {
         const currentCoins = JSON.parse(localStorage.getItem(`${username}_coins`)) || 0;
         localStorage.setItem(`${username}_coins`, JSON.stringify(currentCoins + coinsEarned));
 
-        axios.put('http://127.0.0.1:8080/api/updatepomotime', {
-       // axios.put('https://focusfish-backend-orbital.onrender.com/api/updatepomotime', {
+       // axios.put('http://127.0.0.1:8080/api/updatepomotime', {
+        axios.put('https://focusfish-backend-orbital.onrender.com/api/updatepomotime', {
           date: currentDate,
           seconds: workSeconds,
           category: selectedCategory,
@@ -279,7 +279,8 @@ const Pomodoro = () => {
   const handleSaveDurations = async () => {
     const username = localStorage.getItem('username');
     try {
-      await axios.post('http://127.0.0.1:8080/api/saveDurations', {
+     // await axios.post('http://127.0.0.1:8080/api/saveDurations', {
+      await axios.post('https://focusfish-backend-orbital.onrender.com/api/saveDurations', {
         username: username,
         durations: newDurations
       });
@@ -297,7 +298,8 @@ const Pomodoro = () => {
         return;
       }
       try {
-        const response = await axios.get(`http://127.0.0.1:8080/api/getDurations/${username}`);
+       // const response = await axios.get(`http://127.0.0.1:8080/api/getDurations/${username}`);
+        const response = await axios.get(`https://focusfish-backend-orbital.onrender.com/api/getDurations/${username}`);
         if (response.data) {
           setNewDurations(response.data.durations);
           setMinutes(response.data.durations[mode]);
@@ -332,8 +334,8 @@ const Pomodoro = () => {
   
       const username = localStorage.getItem('username');
       try {
-        const response = await axios.post('http://127.0.0.1:8080/api/addCategory', {
-        //const response = await axios.post('https://focusfish-backend-orbital.onrender.com/api/addCategory', {
+        //const response = await axios.post('http://127.0.0.1:8080/api/addCategory', {
+        const response = await axios.post('https://focusfish-backend-orbital.onrender.com/api/addCategory', {
           username: username,
           category: newCategory
         });
@@ -361,8 +363,8 @@ const Pomodoro = () => {
     }
 
     try {
-      await axios.delete(`http://127.0.0.1:8080/api/deleteCategory/${username}/${category}`);
-      //await axios.delete(`https://focusfish-backend-orbital.onrender.com/api/deleteCategory/${username}/${category}`);
+      //await axios.delete(`http://127.0.0.1:8080/api/deleteCategory/${username}/${category}`);
+      await axios.delete(`https://focusfish-backend-orbital.onrender.com/api/deleteCategory/${username}/${category}`);
     } catch (error) {
       console.error('Error deleting category:', error);
     }
