@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { ToastContainer, toast } from 'react-toastify'; // Import react-toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS file
 import './index.css';
@@ -38,6 +39,7 @@ function CalendarDays({ day, tasks, openPopup }) {
     };
 
     return (
+    
         <div className="table-content">
             {currentDays.map((day) => (
                 <div
@@ -164,7 +166,10 @@ export default class Calendar extends Component {
         const { currentDay, tasks, popupVisible, popupTasks } = this.state;
 
         return (
-            <div>
+        <div>
+        <Helmet>
+            <title>Calendar | FocusFish</title>
+        </Helmet>
                 <header>
                     <div className="header-container">
                         <div className="left-container">

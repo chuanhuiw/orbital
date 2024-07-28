@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import './index.css';
@@ -329,6 +330,9 @@ function Todo() {
 
     return (
         <div>
+            <Helmet>
+            <title>All Tasks | FocusFish</title>
+        </Helmet>
         <header>
                     <div className="header-container">
                         <div className="left-container">

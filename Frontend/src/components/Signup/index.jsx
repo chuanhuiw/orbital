@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import styles from './styles.module.css';
 
@@ -45,6 +46,9 @@ const Signup = () => {
 
     return (
         <div>
+            <Helmet>
+            <title>Signup | FocusFish</title>
+        </Helmet>
         <header>
                     <div className={styles.header_container}>
                         <div className={styles.left_container}>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for toastify
 import Confetti from 'react-confetti';
+import { Helmet } from 'react-helmet';
 
 const badges = [
   { id: 1, price: 10, image: 'b1.png', label: 'Level 1' },
@@ -105,6 +106,9 @@ const Shop = () => {
 
   return (
     <div>
+      <Helmet>
+            <title>Acheivements | FocusFish</title>
+        </Helmet>
       <header>
                     <div className="header-container">
                         <div className="left-container">
@@ -114,7 +118,7 @@ const Shop = () => {
                         <button className="logout-btn" onClick={handleLogout}>Log out</button>
                     </div>
                 </header>
-      <h1>Shop</h1>
+      <h1>Acheivements</h1>
       <div className='coin'>Coins 🪙 {user.coins}</div>
       <div className="badges">
         {badges.map((badge) => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.css'; // Import your CSS for styling
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 function App() {
     const handleLogout = () => {
@@ -20,6 +21,9 @@ function App() {
 
   return (
     <div>
+      <Helmet>
+            <title>Help | FocusFish</title>
+        </Helmet>
     <header>
                     <div className="header-container">
                         <div className="left-container">

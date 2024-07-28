@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import styles from './styles.module.css';
 
 const oceanFacts = [
@@ -52,6 +53,9 @@ const Login = () => {
 
     return (
         <div>
+            <Helmet>
+            <title>Login | FocusFish</title>
+        </Helmet>
             <header>
                     <div className={styles.header_container}>
                         <div className={styles.left_container}>

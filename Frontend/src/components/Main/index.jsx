@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
-
+import {Helmet } from 'react-helmet';
 const Main = () => {
     const [firstName, setFirstName] = useState('');
     useEffect(() => {
@@ -20,6 +20,9 @@ const Main = () => {
 
     return (
         <div>
+            <Helmet>
+            <title>FocusFish</title>
+        </Helmet>
             <header className={styles.header}>
                 <h1 className={styles.logo}>FocusFish</h1>
                 <button className={styles.whiteBtn} onClick={handleLogout}>Log out</button>

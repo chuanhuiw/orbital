@@ -4,54 +4,7 @@ body {
     font-size: 100%;
 }
 
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-  }
-  
-  .left-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .left-container h1 {
-    margin: 0;
-    margin-right: 20px; /* Adjust as needed */
-  }
-  
-  .back-btn {
-    background-color: #f0f0f0; /* Adjust as needed */
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    margin-right: 20px; /* Adjust as needed */
-    height: 40px;
-    width: 170px;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.5s;
-    box-shadow: rgb(181, 180, 180) 0px 6px 0px;
-  }
-  
-  .logout-btn {
-    background-color: #f0f0f0; /* Adjust as needed */
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    height: 40px;
-    width: 100px;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.5s;
-    box-shadow: rgb(181, 180, 180) 0px 6px 0px;
-  }
-  
+
 .text-left {
     margin-top: 10px;
     font-size: 30px;

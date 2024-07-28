@@ -16,6 +16,7 @@ import {
 } from 'recharts';
 import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const DataVis = () => {
     const handleLogout = () => {
@@ -127,6 +128,9 @@ const DataVis = () => {
 
     return (
         <div className={styles.dataVisContainer}>
+            <Helmet>
+            <title>My Stats | FocusFish</title>
+        </Helmet>
             <header>
                     <div className="header-container">
                         <div className="left-container">

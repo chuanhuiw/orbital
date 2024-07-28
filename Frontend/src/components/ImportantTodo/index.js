@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import './index.css';
 
 function Important() {
@@ -84,6 +85,9 @@ function Important() {
 
     return (
         <div>
+            <Helmet>
+            <title>Important Tasks | FocusFish</title>
+        </Helmet>
         <header>
                     <div className="header-container">
                         <div className="left-container">

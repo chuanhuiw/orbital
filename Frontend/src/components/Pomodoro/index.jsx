@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 
 const Pomodoro = () => {
   const handleLogout = () => {
@@ -376,6 +377,9 @@ const Pomodoro = () => {
 
   return (
     <main className={styles.app}>
+      <Helmet>
+            <title>Pomodoro | FocusFish</title>
+        </Helmet>
       <header>
                     <div className="header-container">
                         <div className="left-container">
