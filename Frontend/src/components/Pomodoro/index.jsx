@@ -31,6 +31,7 @@ const Pomodoro = () => {
   });
   const [showMessage, setShowMessage] = useState(false);
   const [congratsMessage, setCongratsMessage] = useState('');
+  const [autostartBreaks, setAutostartBreaks] = useState(false);
 
   const messages = useMemo(() => ({
     pomodoro: "Well Done! You have completed the Pomodoro session!",
@@ -116,10 +117,10 @@ const Pomodoro = () => {
         break;
     }
     setSeconds(0);
-    setIsActive(false);
+    setIsActive(autostartBreaks);
     setProgress(0);
     setSessionStartTime(null);
-  }, [newDurations]);
+  }, [newDurations, autostartBreaks]);
 
   useEffect(() => {
     let interval = null;
@@ -131,8 +132,7 @@ const Pomodoro = () => {
       alert(messages[mode]);
       setTimeout(() => {
         setShowMessage(false);
-        window.location.reload();
-      }, 10000);
+      }, 6000);
     };
 
     const handleTimerEnd = () => {
@@ -166,16 +166,22 @@ const Pomodoro = () => {
 
           setCompletedPomodoros((prev) => prev + 1);
 
-          if (completedPomodoros + 1 >= newDurations.cyclesBeforeLongBreak){
-            handleModeChange('longBreak');
-            setCompletedPomodoros(0);
-          } else {
-            handleModeChange('shortBreak');
-          }
+          setTimeout(() => {
+            if (completedPomodoros + 1 >= newDurations.cyclesBeforeLongBreak){
+              handleModeChange('longBreak');
+              setCompletedPomodoros(0);
+            } else {
+              handleModeChange('shortBreak');
+            }
+          }, 6000); // 6-second delay before starting the break
         } else if (mode === 'shortBreak'){
-          handleModeChange('pomodoro');
+          setTimeout(() => {
+            handleModeChange('pomodoro');
+          }, 6000); // 6-second delay before starting the pomodoro
         } else if (mode === 'longBreak'){
-          handleModeChange('pomodoro');
+          setTimeout(() => {
+            handleModeChange('pomodoro');
+          }, 6000); // 6-second delay before starting the pomodoro
         }
     };
 
@@ -362,6 +368,9 @@ const Pomodoro = () => {
     }
   };
 
+  const toggleAutostartBreaks = () => {
+    setAutostartBreaks(!autostartBreaks);
+  };
 
   return (
     <main className={styles.app}>
@@ -374,13 +383,23 @@ const Pomodoro = () => {
                         <button className="logout-btn" onClick={handleLogout}>Log out</button>
                     </div>
       </header>
+      
       {showMessage && (
         <div className={styles.congratsMessage}>
           {congratsMessage}
           <Confetti />
         </div>
       )}
-
+      <center>
+<div className={styles.checkbox_container}>
+          <input
+            type="checkbox"
+            checked={autostartBreaks}
+            onChange={toggleAutostartBreaks}
+          />
+          <span className={styles.checkbox_label}>Autostart Breaks and Pomodoro</span>
+      </div>
+      </center>
       <progress id="js-progress" value={progress} max="100"></progress>
       <div className={styles.progressBar}></div>
       <div className={styles.timer}>
@@ -444,6 +463,7 @@ const Pomodoro = () => {
           </div>
         </div>
       )}
+      
       <div className={styles.actionButtons}>
           <div>
             <button className={styles.editButton} data-action="edit" onClick={handleChangeDurations}>

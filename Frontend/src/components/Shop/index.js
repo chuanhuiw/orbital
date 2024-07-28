@@ -8,7 +8,7 @@ import Confetti from 'react-confetti';
 
 const badges = [
   { id: 1, price: 10, image: 'b1.png', label: 'Level 1' },
-  { id: 2, price: 10, image: 'b2.png', label: 'Level 2' },
+  { id: 2, price: 30, image: 'b2.png', label: 'Level 2' },
   { id: 3, price: 60, image: 'b3.png', label: 'Level 3' },
   { id: 4, price: 120, image: 'b4.png', label: 'Level 4' },
   { id: 5, price: 200, image: 'b5.png', label: 'Level 5' },
