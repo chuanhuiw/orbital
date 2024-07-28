@@ -11,10 +11,11 @@ function App() {
     };
 
   const videos = [
+    { src: 'ToDo_walkthrough_CC.mp4', label: 'To-Do Walkthrough' },
+    { src: 'Pomodoro_walkthrough_CC.mp4', label: 'Pomodoro Walkthrough' },
     { src: 'Calendar_walkthrough_CC.mp4', label: 'Calendar Walkthrough' },
     { src: 'Datavis_walkthrough_CC.mp4', label: 'Data Visualization Walkthrough' },
-    { src: 'Pomodoro_walkthrough_CC.mp4', label: 'Pomodoro Walkthrough' },
-    { src: 'ToDo_walkthrough_CC.mp4', label: 'To-Do Walkthrough' },
+    { src: 'Shop_walkthrough_CC.mp4', label: 'Acheivement Badges Walkthrough' },
   ];
 
   return (
